@@ -2,10 +2,11 @@
 #include <string>
 #include <map>
 #include <vector>
+#include <algorithm>
 
 std::string add_space_to_board(std::string board) {
 	std::string formatted_board;
-	for (int x = 0; x < board.length(); ++x) {
+	for (size_t x = 0; x < board.length(); ++x) {
 		formatted_board += board.at(x);
 		if (board.at(x) != '\n') {
 			formatted_board.append(" ");
@@ -15,24 +16,28 @@ std::string add_space_to_board(std::string board) {
 }
 
 std::string make_board_unicode(std::string board) {
-	std::map<char, char> conversions;
+	std::string unicode_board;
+	std::map<char, std::string> conversions;
 	char alphabet[] = {
 		'K', 'Q', 'R', 'B', 'N', 'P',
 		'k', 'q', 'r', 'b', 'n', 'p'
 	};
-	char unicode[] = {
-		'\u2654','\u2655','\u2656','\u2657','\u2658','\u2659',
-		'\u266A','\u266B','\u266C','\u266D','\u266E','\u266F'
+	std::string unicode[] = {
+		u8"\u2654",u8"\u2655",u8"\u2656",u8"\u2657",u8"\u2658",u8"\u2659",
+		u8"\u266A",u8"\u266B",u8"\u266C",u8"\u266D",u8"\u266E",u8"\u266F"
 	};
 	for (int x = 0; x < 12; ++x) {
 		conversions[alphabet[x]] = unicode[x];
 	}
-	/*
-	for (int x = 0; x < board.length(); ++x) {
-		if (board.at(x) == )
+	for (size_t x = 0; x < board.length(); ++x) {
+		if (std::find(std::begin(alphabet), std::end(alphabet), board.at(x)) != std::end(alphabet)) {
+			unicode_board.append(conversions.at(board.at(x)));
+		}
+		else {
+			unicode_board += board.at(x);
+		}
 	}
-	*/
-	return "shit";//weff
+	return unicode_board;
 }
 
 int main() {
@@ -51,6 +56,7 @@ int main() {
 		"  RNBQKBNR \n"
 		"           \n"
 		"           \n";
-	std::cout << add_space_to_board(board) << std::endl;
+	std::cout << u8"\u2654" << std::endl;
+	std::cout << make_board_unicode(add_space_to_board(board)) << std::endl;
 	return 0;
 }
