@@ -15,29 +15,62 @@ std::string add_space_to_board(std::string board) {
 	return formatted_board;
 }
 
-std::string make_board_unicode(std::string board) {
-	std::string unicode_board;
-	std::map<char, std::string> conversions;
-	char alphabet[] = {
-		'K', 'Q', 'R', 'B', 'N', 'P',
-		'k', 'q', 'r', 'b', 'n', 'p'
-	};
-	std::string unicode[] = {
-		u8"\u2654",u8"\u2655",u8"\u2656",u8"\u2657",u8"\u2658",u8"\u2659",
-		u8"\u266A",u8"\u266B",u8"\u266C",u8"\u266D",u8"\u266E",u8"\u266F"
-	};
-	for (int x = 0; x < 12; ++x) {
-		conversions[alphabet[x]] = unicode[x];
+std::string move_to_pos(std::string move) {
+	std::string pos;
+	std::map<char, int> cols;
+	std::map<char, int> rows;
+	for (int x = 0; x < 8; ++x) {
+		cols[97+x] = 2+x;
 	}
+	for (int x = 0; x < 8; ++x) {
+		rows[49 + x] = 90 - 10*x;
+	}
+	for (int x = 0; x < 3; x+=2) {
+		pos.append(std::to_string(cols[move.at(x)]+ rows[move.at(x + 1)]));
+	}
+	return pos;
+}
+
+std::string pos_to_move(int from, int to) {
+	std::string move;
+	return move;
+}
+
+std::vector<std::string>
+gen_moves(std::string board, int pos) {
+	std::vector<std::string> moves;
+	int up = -10;
+	int dn = 10;
+	int lt = -1;
+	int rt = 1;
+	char ally[] = { 'P','N','B','R','Q','K' };
+	char foe[] = { 'p','n','b','r','q','k' };
 	for (size_t x = 0; x < board.length(); ++x) {
-		if (std::find(std::begin(alphabet), std::end(alphabet), board.at(x)) != std::end(alphabet)) {
-			unicode_board.append(conversions.at(board.at(x)));
+		if (board.at(x) == 'P') {
+			if (board.at(x + up) == '.') {
+				moves.push_back(std::to_string(x).append(std::to_string(x + up)));
+				if (board.at(x + 2 * up) == '.') {
+					moves.push_back(std::to_string(x).append(std::to_string(x + 2*up)));
+				}
+			}
 		}
-		else {
-			unicode_board += board.at(x);
+		else if (board.at(x) == 'N') {
+
+		}
+		else if (board.at(x) == 'B') {
+
+		}
+		else if (board.at(x) == 'R') {
+
+		}
+		else if (board.at(x) == 'Q') {
+
+		}
+		else if (board.at(x) == 'K') {
+
 		}
 	}
-	return unicode_board;
+	return moves;
 }
 
 int main() {
@@ -56,7 +89,9 @@ int main() {
 		"  RNBQKBNR \n"
 		"           \n"
 		"           \n";
-	std::cout << u8"\u2654" << std::endl;
-	std::cout << make_board_unicode(add_space_to_board(board)) << std::endl;
-	return 0;
+	std::cout << add_space_to_board(board) << std::endl;
+	std::cout << "make yo move cocksucka: ";
+	std::cin >> input;
+	std::cout << move_to_pos(input) << std::endl;
+ 	return 0;
 }
