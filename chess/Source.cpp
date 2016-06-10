@@ -92,6 +92,17 @@ int main() {
 	std::cout << add_space_to_board(board) << std::endl;
 	std::cout << "make yo move cocksucka: ";
 	std::cin >> input;
-	std::cout << move_to_pos(input) << std::endl;
+	input = move_to_pos(input);
+	std::cout << input << std::endl;
+	std::cout << "moves: ";
+	std::cout << input.substr(0, 2) << std::endl;
+	std::string sub = input.substr(0, 2);
+	
+	int pos = std::stoi(sub, nullptr, 10);
+	
+	std::cout << pos << std::endl;
+	std::vector<std::string> moves = gen_moves(board, pos);
+	std::cout << moves.at(0) << std::endl;
+	
  	return 0;
 }
