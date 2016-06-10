@@ -32,7 +32,7 @@ std::string make_board_unicode(std::string board) {
 		if (board.at(x) == )
 	}
 	*/
-	return "shit";
+	return "shit";//wef
 }
 
 int main() {
