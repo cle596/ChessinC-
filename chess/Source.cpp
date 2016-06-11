@@ -51,7 +51,7 @@ gen_moves(std::string board) {
 	};
 	int Kmoves[] = {
 		up,up + rt,rt,dn + rt,dn,
-		dn + lt,lt,up + lt,up
+		dn + lt,lt,up + lt
 	};
 	for (size_t x = 0; x < board.length(); ++x) {
 		if (board.at(x) == 'P') {
@@ -71,7 +71,20 @@ gen_moves(std::string board) {
 			}
 		}
 		else if (board.at(x) == 'B') {
-
+			for (int y = 0; y < 8; ++y) {
+				int z = 1;
+				while (board.at(x + z*Kmoves[y])=='.' ||
+					std::find(std::begin(foe),std::end(foe),board.at(x+z*Kmoves[y]))!=std::end(foe)) {
+					if (board.at(x + z*Kmoves[y]) == '.') {
+						moves.push_back(std::to_string(x).append(std::to_string(x+z*Kmoves[y])));
+					}
+					else if (std::find(std::begin(foe),std::end(foe),board.at(x+z*Kmoves[y]))!=std::end(foe)) {
+						moves.push_back(std::to_string(x).append(std::to_string(x + z*Kmoves[y])));
+						break;
+					}
+					z += 1;
+				}
+			}
 		}
 		else if (board.at(x) == 'R') {
 
