@@ -3,6 +3,7 @@
 #include <map>
 #include <vector>
 #include <algorithm>
+#include <typeinfo>
 
 std::string add_space_to_board(std::string board) {
 	std::string formatted_board;
@@ -31,8 +32,22 @@ std::string move_to_pos(std::string move) {
 	return pos;
 }
 
-std::string pos_to_move(int from, int to) {
+std::string pos_to_move(std::string pos) {
 	std::string move;
+	std::map<int, char> cols;
+	std::map<int, char> rows;
+	for (int x = 0; x < 8; ++x) {
+		cols[1 + x] = 97 + x;
+	}
+	for (int x = 0; x < 8; ++x) {
+		rows[9 - x] = 49 + x;
+	}
+	int posi1 = std::stoi(pos.substr(0,2),nullptr);
+	int posi2 = std::stoi(pos.substr(2, 2), nullptr);
+	move += cols.at(posi1 - (posi1 / 10)*10);
+	move += rows.at(posi1 / 10);
+	move += cols.at(posi2 - (posi2 / 10) * 10);
+	move += rows.at(posi2 / 10);
 	return move;
 }
 
@@ -48,6 +63,14 @@ gen_moves(std::string board) {
 	int Nmoves[] = {
 		2*up+rt,up+2*rt,dn+2*rt,2*dn+rt,
 		2*dn+lt,dn+2*lt,up+2*lt,2*up+lt
+	};
+	int Bmoves[] = {
+		up + rt,dn + rt,
+		dn + lt,up + lt
+	};
+	int Rmoves[] = {
+		up,rt,
+		dn,lt
 	};
 	int Kmoves[] = {
 		up,up + rt,rt,dn + rt,dn,
@@ -71,15 +94,15 @@ gen_moves(std::string board) {
 			}
 		}
 		else if (board.at(x) == 'B') {
-			for (int y = 0; y < 8; ++y) {
+			for (int y = 0; y < 4; ++y) {
 				int z = 1;
 				while (board.at(x + z*Kmoves[y])=='.' ||
-					std::find(std::begin(foe),std::end(foe),board.at(x+z*Kmoves[y]))!=std::end(foe)) {
+					std::find(std::begin(foe),std::end(foe),board.at(x+z*Bmoves[y]))!=std::end(foe)) {
 					if (board.at(x + z*Kmoves[y]) == '.') {
-						moves.push_back(std::to_string(x).append(std::to_string(x+z*Kmoves[y])));
+						moves.push_back(std::to_string(x).append(std::to_string(x+z*Bmoves[y])));
 					}
-					else if (std::find(std::begin(foe),std::end(foe),board.at(x+z*Kmoves[y]))!=std::end(foe)) {
-						moves.push_back(std::to_string(x).append(std::to_string(x + z*Kmoves[y])));
+					else if (std::find(std::begin(foe),std::end(foe),board.at(x+z*Bmoves[y]))!=std::end(foe)) {
+						moves.push_back(std::to_string(x).append(std::to_string(x + z*Bmoves[y])));
 						break;
 					}
 					z += 1;
@@ -119,12 +142,11 @@ int main() {
 	std::cout << "make yo move cocksucka: ";
 	std::cin >> input;
 	input = move_to_pos(input);
-	std::cout << input << std::endl;
 	std::string sub = input.substr(0, 2);
 	int pos = std::stoi(sub, nullptr, 10);
 	std::vector<std::string> moves = gen_moves(board);
 	for (size_t x = 0; x < moves.size(); ++x) {
-		std::cout << moves.at(x) << std::endl;
+		std::cout << pos_to_move(moves.at(x)) << std::endl;
 	}
 	
  	return 0;
