@@ -37,7 +37,7 @@ std::string pos_to_move(int from, int to) {
 }
 
 std::vector<std::string>
-gen_moves(std::string board, int pos) {
+gen_moves(std::string board) {
 	std::vector<std::string> moves;
 	int up = -10;
 	int dn = 10;
@@ -45,6 +45,14 @@ gen_moves(std::string board, int pos) {
 	int rt = 1;
 	char ally[] = { 'P','N','B','R','Q','K' };
 	char foe[] = { 'p','n','b','r','q','k' };
+	int Nmoves[] = {
+		2*up+rt,up+2*rt,dn+2*rt,2*dn+rt,
+		2*dn+lt,dn+2*lt,up+2*lt,2*up+lt
+	};
+	int Kmoves[] = {
+		up,up + rt,rt,dn + rt,dn,
+		dn + lt,lt,up + lt,up
+	};
 	for (size_t x = 0; x < board.length(); ++x) {
 		if (board.at(x) == 'P') {
 			if (board.at(x + up) == '.') {
@@ -55,7 +63,12 @@ gen_moves(std::string board, int pos) {
 			}
 		}
 		else if (board.at(x) == 'N') {
-
+			for (int y = 0; y < 8; ++y) {
+				if (board.at(x+Nmoves[y]) == '.' ||
+					std::find(std::begin(foe), std::end(foe), board.at(x + Nmoves[y])) != std::end(foe)) {
+					moves.push_back(std::to_string(x).append(std::to_string(x + Nmoves[y])));
+				}
+			}
 		}
 		else if (board.at(x) == 'B') {
 
@@ -77,32 +90,29 @@ int main() {
 	std::cout << "time to play chess cocksucka!\n";
 	std::string input;
 	std::string board =
-		"           \n"
-		"           \n"
-		"  rnbqkbnr \n"
-		"  pppppppp \n"
-		"  ........ \n"
-		"  ........ \n"
-		"  ........ \n"
-		"  ........ \n"
-		"  PPPPPPPP \n"
-		"  RNBQKBNR \n"
-		"           \n"
-		"           \n";
+		"         \n"
+		"         \n"
+		" rnbqkbnr\n"
+		" pppppppp\n"
+		" ........\n"
+		" ........\n"
+		" ........\n"
+		" ........\n"
+		" PPPPPPPP\n"
+		" RNBQKBNR\n"
+		"         \n"
+		"         \n";
 	std::cout << add_space_to_board(board) << std::endl;
 	std::cout << "make yo move cocksucka: ";
 	std::cin >> input;
 	input = move_to_pos(input);
 	std::cout << input << std::endl;
-	std::cout << "moves: ";
-	std::cout << input.substr(0, 2) << std::endl;
 	std::string sub = input.substr(0, 2);
-	
 	int pos = std::stoi(sub, nullptr, 10);
-	
-	std::cout << pos << std::endl;
-	std::vector<std::string> moves = gen_moves(board, pos);
-	std::cout << moves.at(0) << std::endl;
+	std::vector<std::string> moves = gen_moves(board);
+	for (size_t x = 0; x < moves.size(); ++x) {
+		std::cout << moves.at(x) << std::endl;
+	}
 	
  	return 0;
 }
