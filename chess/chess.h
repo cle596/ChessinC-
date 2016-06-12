@@ -4,6 +4,9 @@
 #include <vector>
 
 std::vector<std::string>
+pawn(std::vector<std::string>, std::string, int);
+
+std::vector<std::string>
 gen_moves(std::string);
 
 std::string 
@@ -34,3 +37,4 @@ std::string init_board =
 	" RNBQKBNR\n"
 	"         \n"
 	"         \n";
+
