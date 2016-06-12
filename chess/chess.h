@@ -18,6 +18,9 @@ pos_to_move(std::string);
 std::vector<std::string>
 translate_moves(std::vector<std::string>);
 
+std::string
+new_board(std::string, std::string);
+
 std::string init_board =
 	"         \n"
 	"         \n"

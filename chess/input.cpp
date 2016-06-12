@@ -23,7 +23,7 @@ move_to_pos(std::string move) {
 	std::map<char, int> cols;
 	std::map<char, int> rows;
 	for (int x = 0; x < 8; ++x) {
-		cols[97 + x] = 2 + x;
+		cols[97 + x] = 1 + x;
 	}
 	for (int x = 0; x < 8; ++x) {
 		rows[49 + x] = 90 - 10 * x;
@@ -40,7 +40,7 @@ pos_to_move(std::string pos) {
 	std::map<int, char> cols;
 	std::map<int, char> rows;
 	for (int x = 0; x < 8; ++x) {
-		cols[1 + x] = 97 + x;
+		cols[ 1 + x ] = 97 + x;
 	}
 	for (int x = 0; x < 8; ++x) {
 		rows[9 - x] = 49 + x;
@@ -61,4 +61,13 @@ translate_moves(std::vector<std::string> moves) {
 		translated_moves.push_back(pos_to_move(moves.at(x)));
 	}
 	return translated_moves;
+}
+
+std::string 
+new_board(std::string oboard,std::string pos) {
+	int from = std::stoi(pos.substr(0, 2), nullptr);
+	int to = std::stoi(pos.substr(2, 2), nullptr);
+	oboard.replace(to, 1, std::string(1,oboard.at(from)));
+	oboard.replace(from, 1, ".");
+	return oboard;
 }

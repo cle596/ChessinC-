@@ -50,7 +50,7 @@ gen_moves(std::string board) {
 		else if (board.at(x) == 'B') {
 			for (int y = 0; y < 4; ++y) {
 				int z = 1;
-				while (board.at(x + z*Kmoves[y]) == '.' ||
+				while (board.at(x + z*Bmoves[y]) == '.' ||
 					std::find(std::begin(foe), std::end(foe), board.at(x + z*Bmoves[y])) != std::end(foe)) {
 					if (board.at(x + z*Kmoves[y]) == '.') {
 						moves.push_back(std::to_string(x).append(std::to_string(x + z*Bmoves[y])));
