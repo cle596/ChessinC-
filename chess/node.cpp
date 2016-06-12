@@ -30,7 +30,30 @@ Node::pawn(int x) {
 			this->moves.push_back(
 				add_int_strings(x, x + 2 * up)
 			);
+			this->en_passant = x + up;
 		}
+	}
+	//cross
+	else if (in_array(this->board.at(x + up + rt),foe)) {
+		this->moves.push_back(
+			add_int_strings(x, x + up + rt)
+		);
+	}
+	else if (in_array(this->board.at(x + up + lt), foe)) {
+		this->moves.push_back(
+			add_int_strings(x, x + up + lt)
+		);
+	}
+	//en passant
+	else if (x + up + rt == this->en_passant) {
+		this->moves.push_back(
+			add_int_strings(x, x + up + rt)
+		);
+	}
+	else if (x + up + lt == this->en_passant) {
+		this->moves.push_back(
+			add_int_strings(x, x + up + lt)
+		);
 	}
 }
 
@@ -115,17 +138,23 @@ Node::queen(int x) {
 void
 Node::king(int x) {
 	for (int y = 0; y < 8; ++y) {
-		if (this->board.at(x + Kmoves[y]) == '.') {
+		if (this->board.at(x + Kmoves[y]) == '.' ||
+			in_array(this->board.at(x + Kmoves[y]), foe)) {
 			this->moves.push_back(
 				add_int_strings(x, x + Kmoves[y])
 			);
 		}
-		else if (in_array(this->board.at(x + Kmoves[y]), foe)) {
-			this->moves.push_back(
-				add_int_strings(x, x + Kmoves[y])
-			);
-			break;
-		}
+	}
+	if (this->castle[0] &&
+		this->board.at(96) == '.' &&
+		this->board.at(97) == '.'){
+		this->moves.push_back("wk00");
+	}
+	if (this->castle[1] &&
+		this->board.at(92) == '.' &&
+		this->board.at(93) == '.' &&
+		this->board.at(94) == '.') {
+		this->moves.push_back("wq00");
 	}
 }
 

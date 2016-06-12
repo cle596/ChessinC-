@@ -8,17 +8,31 @@
 #include "game.h"
 
 #define in_vector(e,vec) std::find(vec.begin(), vec.end(), e) != vec.end()
+#define in_array(e,arr) std::find(std::begin(arr), std::end(arr), e) != std::end(arr)
 
 void
 Game::init() {
 	std::cout << "time to play chess cocksucka!\n";
+	this->root.castle[0] = true;
+	this->root.castle[1] = true;
+	this->root.castle[2] = true;
+	this->root.castle[3] = true;
+	this->castle_input[0] = "wk00";
+	this->castle_input[1] = "wq00";
+	this->castle_input[2] = "bk00"; 
+	this->castle_input[3] = "bq00";
 }
 
 void
 Game::take_input() {
 	std::cout << "make yo move sucka: ";
 	std::cin >> this->input;
-	this->pos = move_to_pos(this->input);
+	if (in_array(this->input, castle_input)) {
+		this->pos = this->input;
+	}
+	else {
+		this->pos = move_to_pos(this->input);
+	}
 }
 
 std::string
@@ -76,14 +90,43 @@ Game::translate_moves(std::vector<std::string> moves) {
 
 void
 Game::update_root() {
-	int from = std::stoi(this->pos.substr(0, 2), nullptr);
-	int to = std::stoi(this->pos.substr(2, 2), nullptr);
-	this->root.board.replace(
-		to, 
-		1, 
-		std::string(1, this->root.board.at(from))
-	);
-	this->root.board.replace(from, 1, ".");
+	if (in_array(this->pos, castle_input)) {
+		if (this->pos == castle_input[0]) {
+			this->root.board.replace(95, 1, ".");
+			this->root.board.replace(96, 1, "R");
+			this->root.board.replace(97, 1, "K");
+			this->root.board.replace(98, 1, ".");
+		}
+		else if (this->pos == castle_input[1]) {
+			this->root.board.replace(91, 1, ".");
+			this->root.board.replace(92, 1, ".");
+			this->root.board.replace(93, 1, "K");
+			this->root.board.replace(94, 1, "R");
+			this->root.board.replace(95, 1, ".");
+		}
+	}
+	else {
+		int from = std::stoi(this->pos.substr(0, 2), nullptr);
+		int to = std::stoi(this->pos.substr(2, 2), nullptr);
+		if (root.board.at(from) == 'K') {
+			this->root.castle[0] = false;
+			this->root.castle[1] = false;
+		}
+		else if (root.board.at(from) == 'R'
+			&& from == 98) {
+			this->root.castle[0] = false;
+		}
+		else if (root.board.at(from) == 'R'
+			&& from == 91) {
+			this->root.castle[1] = false;
+		}
+		this->root.board.replace(
+			to,
+			1,
+			std::string(1, this->root.board.at(from))
+		);
+		this->root.board.replace(from, 1, ".");
+	}
 }
 
 void 
@@ -91,7 +134,6 @@ Game::process_input() {
 	this->moves = this->root.gen_moves();
 	if (in_vector(this->pos,this->moves)) {
 		this->update_root();
-		this->root.print();
 	}
 	else {
 		std::cout << "not a legal move" << std::endl;

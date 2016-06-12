@@ -14,6 +14,7 @@ public:
 	std::string pos;
 	std::vector<std::string> moves;
 	std::vector<std::string> tmoves;
+	std::string castle_input[4];
 
 	Node root = Node();
 
@@ -26,3 +27,4 @@ public:
 	void process_input();
 
 };
+
