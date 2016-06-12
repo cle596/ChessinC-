@@ -3,12 +3,6 @@
 #include <string>
 #include <vector>
 
-std::vector<std::string>
-pawn(std::vector<std::string>, std::string, int);
-
-std::vector<std::string>
-gen_moves(std::string);
-
 std::string 
 add_space_to_board(std::string);
 

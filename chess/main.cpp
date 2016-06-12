@@ -6,6 +6,7 @@
 #include <typeinfo>
 
 #include "chess.h"
+#include "gen.h"
 
 int main() {
 	std::string myboard = init_board;

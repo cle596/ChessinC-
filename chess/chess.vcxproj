@@ -121,6 +121,7 @@
   <ItemGroup>
     <ClInclude Include="chess.h" />
     <ClInclude Include="gen.h" />
+    <ClInclude Include="gendefs.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
