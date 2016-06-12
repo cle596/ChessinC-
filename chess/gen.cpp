@@ -33,7 +33,7 @@ bishop(std::vector<std::string>& moves, std::string board, int x) {
 		int z = 1;
 		while (board.at(x + z*Bmoves[y]) == '.' ||
 			in_array(board.at(x + z*Bmoves[y]),foe)) {
-			if (board.at(x + z*Kmoves[y]) == '.') {
+			if (board.at(x + z*Bmoves[y]) == '.') {
 				moves.push_back(add_int_strings(x,x + z*Bmoves[y]));
 			}
 			else if (in_array(board.at(x + z*Bmoves[y]),foe)) {
