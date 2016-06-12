@@ -1,5 +1,8 @@
 #pragma once
 
+#define add_int_strings(x,y) std::to_string(x).append(std::to_string(y))
+#define in_array(e,arr) std::find(std::begin(arr), std::end(arr), e) != std::end(arr)
+
 int up = -10;
 int dn = 10;
 int lt = -1;

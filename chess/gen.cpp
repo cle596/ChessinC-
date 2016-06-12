@@ -10,9 +10,9 @@
 void
 pawn(std::vector<std::string>& moves,std::string board,int x) {
 	if (board.at(x + up) == '.') {
-		moves.push_back(std::to_string(x).append(std::to_string(x + up)));
+		moves.push_back(add_int_strings(x,x+up));
 		if (board.at(x + 2 * up) == '.') {
-			moves.push_back(std::to_string(x).append(std::to_string(x + 2 * up)));
+			moves.push_back(add_int_strings(x,x + 2 * up));
 		}
 	}
 }
@@ -21,8 +21,8 @@ void
 knight(std::vector<std::string>& moves, std::string board, int x) {
 	for (int y = 0; y < 8; ++y) {
 		if (board.at(x + Nmoves[y]) == '.' ||
-			std::find(std::begin(foe), std::end(foe), board.at(x + Nmoves[y])) != std::end(foe)) {
-			moves.push_back(std::to_string(x).append(std::to_string(x + Nmoves[y])));
+			in_array(board.at(x + Nmoves[y]),foe)) {
+			moves.push_back(add_int_strings(x,x + Nmoves[y]));
 		}
 	}
 }
@@ -32,12 +32,12 @@ bishop(std::vector<std::string>& moves, std::string board, int x) {
 	for (int y = 0; y < 4; ++y) {
 		int z = 1;
 		while (board.at(x + z*Bmoves[y]) == '.' ||
-			std::find(std::begin(foe), std::end(foe), board.at(x + z*Bmoves[y])) != std::end(foe)) {
+			in_array(board.at(x + z*Bmoves[y]),foe)) {
 			if (board.at(x + z*Kmoves[y]) == '.') {
-				moves.push_back(std::to_string(x).append(std::to_string(x + z*Bmoves[y])));
+				moves.push_back(add_int_strings(x,x + z*Bmoves[y]));
 			}
-			else if (std::find(std::begin(foe), std::end(foe), board.at(x + z*Bmoves[y])) != std::end(foe)) {
-				moves.push_back(std::to_string(x).append(std::to_string(x + z*Bmoves[y])));
+			else if (in_array(board.at(x + z*Bmoves[y]),foe)) {
+				moves.push_back(add_int_strings(x,x + z*Bmoves[y]));
 				break;
 			}
 			z += 1;
@@ -50,12 +50,12 @@ rook(std::vector<std::string>& moves, std::string board, int x) {
 	for (int y = 0; y < 4; ++y) {
 		int z = 1;
 		while (board.at(x + z*Rmoves[y]) == '.' ||
-			std::find(std::begin(foe), std::end(foe), board.at(x + z*Rmoves[y])) != std::end(foe)) {
+			in_array(board.at(x + z*Rmoves[y]),foe)) {
 			if (board.at(x + z*Rmoves[y]) == '.') {
-				moves.push_back(std::to_string(x).append(std::to_string(x + z*Rmoves[y])));
+				moves.push_back(add_int_strings(x,x + z*Rmoves[y]));
 			}
-			else if (std::find(std::begin(foe), std::end(foe), board.at(x + z*Rmoves[y])) != std::end(foe)) {
-				moves.push_back(std::to_string(x).append(std::to_string(x + z*Rmoves[y])));
+			else if (in_array(board.at(x + z*Rmoves[y]),foe)) {
+				moves.push_back(add_int_strings(x,x + z*Rmoves[y]));
 				break;
 			}
 			z += 1;
@@ -68,12 +68,12 @@ queen(std::vector<std::string>& moves, std::string board, int x) {
 	for (int y = 0; y < 8; ++y) {
 		int z = 1;
 		while (board.at(x + z*Kmoves[y]) == '.' ||
-			std::find(std::begin(foe), std::end(foe), board.at(x + z*Kmoves[y])) != std::end(foe)) {
+			in_array(board.at(x + z*Kmoves[y]),foe)) {
 			if (board.at(x + z*Kmoves[y]) == '.') {
-				moves.push_back(std::to_string(x).append(std::to_string(x + z*Kmoves[y])));
+				moves.push_back(add_int_strings(x,x + z*Kmoves[y]));
 			}
-			else if (std::find(std::begin(foe), std::end(foe), board.at(x + z*Kmoves[y])) != std::end(foe)) {
-				moves.push_back(std::to_string(x).append(std::to_string(x + z*Kmoves[y])));
+			else if (in_array(board.at(x + z*Kmoves[y]),foe)) {
+				moves.push_back(add_int_strings(x,x + z*Kmoves[y]));
 				break;
 			}
 			z += 1;
@@ -85,10 +85,10 @@ void
 king(std::vector<std::string>& moves, std::string board, int x) {
 	for (int y = 0; y < 8; ++y) {
 		if (board.at(x + Kmoves[y]) == '.') {
-			moves.push_back(std::to_string(x).append(std::to_string(x + Kmoves[y])));
+			moves.push_back(add_int_strings(x,x + Kmoves[y]));
 		}
-		else if (std::find(std::begin(foe), std::end(foe), board.at(x + Kmoves[y])) != std::end(foe)) {
-			moves.push_back(std::to_string(x).append(std::to_string(x + Kmoves[y])));
+		else if (in_array(board.at(x + Kmoves[y]),foe)) {
+			moves.push_back(add_int_strings(x,x + Kmoves[y]));
 			break;
 		}
 	}

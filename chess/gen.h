@@ -21,3 +21,5 @@ king(std::vector<std::string>&, std::string, int);
 std::vector<std::string>
 gen_moves(std::string);
 
+
+
