@@ -4,7 +4,9 @@
 #include <vector>
 
 class Node {
+
 public:
+
 	std::string board =
 		"         \n"
 		"         \n"
@@ -18,6 +20,7 @@ public:
 		" RNBQKBNR\n"
 		"         \n"
 		"         \n";
+
 	std::vector<std::string> moves;
 	std::vector<std::string> tmoves;
 
@@ -29,4 +32,5 @@ public:
 	void queen(int);
 	void king(int);
 	std::vector<std::string> gen_moves();
+
 };
