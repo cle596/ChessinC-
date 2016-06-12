@@ -22,7 +22,6 @@ public:
 		"         \n";
 
 	std::vector<std::string> moves;
-	std::vector<std::string> tmoves;
 
 	void print();
 	void pawn(int);
