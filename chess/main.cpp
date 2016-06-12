@@ -7,8 +7,15 @@
 
 #include "chess.h"
 #include "gen.h"
+#include "node.h"
 
 int main() {
+	std::vector<std::string> moves;
+	Node root = Node();
+	root.print();
+	moves = root.gen_moves();
+	std::cout << moves.at(0) << std::endl;
+	/*
 	std::string myboard = init_board;
 	std::string input;
 	std::vector<std::string> moves;
@@ -29,5 +36,6 @@ int main() {
 			std::cout << "not a legal move" << std::endl;
 		}
 	}
+	*/
  	return 0;
 }
