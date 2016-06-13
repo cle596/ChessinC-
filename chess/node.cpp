@@ -46,7 +46,6 @@ Node::pawn(int x) {
 			this->moves.push_back(
 				add_int_strings(x, x + 2 * di)
 			);
-			this->en_passant = x + di;
 		}
 	}
 	//cross

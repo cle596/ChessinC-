@@ -162,6 +162,14 @@ Game::update_root() {
 			&& from == 21) {
 			this->root.castle[3] = false;
 		}
+		else if (root.board.at(from) == 'P' &&
+			to == from-20) {
+			this->root.en_passant = from-10;
+		}
+		else if (root.board.at(from) == 'p' &&
+			to == from + 20) {
+			this->root.en_passant = from + 10;
+		}
 		this->root.board.replace(
 			to,
 			1,
