@@ -49,23 +49,23 @@ Node::pawn(int x) {
 		}
 	}
 	//cross
-	else if (in_array(this->board.at(x + di + rt),this->foe)) {
+	if (in_array(this->board.at(x + di + rt),this->foe)) {
 		this->moves.push_back(
 			add_int_strings(x, x + di + rt)
 		);
 	}
-	else if (in_array(this->board.at(x + di + lt), this->foe)) {
+	if (in_array(this->board.at(x + di + lt), this->foe)) {
 		this->moves.push_back(
 			add_int_strings(x, x + di + lt)
 		);
 	}
 	//en passant
-	else if (x + di + rt == this->en_passant) {
+	if (x + di + rt == this->en_passant) {
 		this->moves.push_back(
 			add_int_strings(x, x + di + rt)
 		);
 	}
-	else if (x + di + lt == this->en_passant) {
+	if (x + di + lt == this->en_passant) {
 		this->moves.push_back(
 			add_int_strings(x, x + di + lt)
 		);

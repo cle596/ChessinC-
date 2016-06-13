@@ -138,37 +138,49 @@ Game::update_root() {
 	else {
 		int from = std::stoi(this->pos.substr(0, 2), nullptr);
 		int to = std::stoi(this->pos.substr(2, 2), nullptr);
-		if (root.board.at(from) == 'K') {
+		if (this->root.board.at(from) == 'K') {
 			this->root.castle[0] = false;
 			this->root.castle[1] = false;
 		}
-		else if (root.board.at(from) == 'R'
+		else if (this->root.board.at(from) == 'R'
 			&& from == 98) {
 			this->root.castle[0] = false;
 		}
-		else if (root.board.at(from) == 'R'
+		else if (this->root.board.at(from) == 'R'
 			&& from == 91) {
 			this->root.castle[1] = false;
 		}
-		else if (root.board.at(from) == 'k') {
+		else if (this->root.board.at(from) == 'k') {
 			this->root.castle[2] = false;
 			this->root.castle[3] = false;
 		}
-		else if (root.board.at(from) == 'r'
+		else if (this->root.board.at(from) == 'r'
 			&& from == 28) {
 			this->root.castle[2] = false;
 		}
-		else if (root.board.at(from) == 'r'
+		else if (this->root.board.at(from) == 'r'
 			&& from == 21) {
 			this->root.castle[3] = false;
 		}
-		else if (root.board.at(from) == 'P' &&
+		else if (this->root.board.at(from) == 'P' &&
 			to == from-20) {
 			this->root.en_passant = from-10;
 		}
-		else if (root.board.at(from) == 'p' &&
+		else if (this->root.board.at(from) == 'p' &&
 			to == from + 20) {
 			this->root.en_passant = from + 10;
+		}
+		else if (this->root.board.at(from) == 'P' &&
+			to == this->root.en_passant) {
+			this->root.board.at(this->root.en_passant+10) = '.';
+			//this->root.board.at(from) = '.';
+			this->root.en_passant = 0;
+		}
+		else if (this->root.board.at(from) == 'p' &&
+			to == this->root.en_passant) {
+			this->root.board.at(this->root.en_passant-10) = '.';
+			//this->root.board.at(from) = '.';
+			this->root.en_passant = 0;
 		}
 		this->root.board.replace(
 			to,

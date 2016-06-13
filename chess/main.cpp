@@ -17,6 +17,7 @@ int main() {
 
 	while (true) {		
 		std::cout << "score: " << g.root.score() << std::endl;
+		std::cout << "en_passant: " << g.root.en_passant << std::endl;
 		g.root.print();
 		g.take_input();
 		g.process_input();
