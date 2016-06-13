@@ -16,6 +16,7 @@ int main() {
 	g.init();
 
 	while (true) {		
+		std::cout << "score: " << g.root.score() << std::endl;
 		g.root.print();
 		g.take_input();
 		g.process_input();

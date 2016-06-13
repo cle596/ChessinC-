@@ -24,7 +24,13 @@ public:
 	bool castle[4]; //wk,wq,bk,bq
 	int en_passant;
 
-	int P, N, B, R, Q, K, k;
+	const int P = 100;
+	const int N = 320;
+	const int B = 330;
+	const int R = 500; 
+	const int Q = 900;
+	const int K = 20000;
+
 	const int pawn_pst[120] = {
 		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,

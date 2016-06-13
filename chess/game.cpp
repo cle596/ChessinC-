@@ -23,12 +23,6 @@ Game::init() {
 	this->castle_input[1] = "wq00";
 	this->castle_input[2] = "bk00"; 
 	this->castle_input[3] = "bq00";
-	this->root.P = 100;
-	this->root.N = 320;
-	this->root.B = 330;
-	this->root.R = 500;
-	this->root.Q = 900;
-	this->root.K = 20000;
 }
 
 void
@@ -112,6 +106,19 @@ Game::update_root() {
 			this->root.board.replace(94, 1, "R");
 			this->root.board.replace(95, 1, ".");
 		}
+		else if (this->pos == castle_input[1]) {
+			this->root.board.replace(25, 1, ".");
+			this->root.board.replace(26, 1, "r");
+			this->root.board.replace(27, 1, "k");
+			this->root.board.replace(28, 1, ".");
+		}
+		else if (this->pos == castle_input[3]) {
+			this->root.board.replace(21, 1, ".");
+			this->root.board.replace(22, 1, ".");
+			this->root.board.replace(23, 1, "k");
+			this->root.board.replace(24, 1, "r");
+			this->root.board.replace(25, 1, ".");
+		}
 	}
 	else {
 		int from = std::stoi(this->pos.substr(0, 2), nullptr);
@@ -127,6 +134,18 @@ Game::update_root() {
 		else if (root.board.at(from) == 'R'
 			&& from == 91) {
 			this->root.castle[1] = false;
+		}
+		else if (root.board.at(from) == 'k') {
+			this->root.castle[2] = false;
+			this->root.castle[3] = false;
+		}
+		else if (root.board.at(from) == 'r'
+			&& from == 28) {
+			this->root.castle[2] = false;
+		}
+		else if (root.board.at(from) == 'r'
+			&& from == 21) {
+			this->root.castle[3] = false;
 		}
 		this->root.board.replace(
 			to,

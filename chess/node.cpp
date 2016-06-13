@@ -153,16 +153,31 @@ Node::king(int x) {
 			);
 		}
 	}
-	if (this->castle[0] &&
-		this->board.at(96) == '.' &&
-		this->board.at(97) == '.'){
-		this->moves.push_back("wk00");
+	if (this->turn.compare("white") == 0) {
+		if (this->castle[0] &&
+			this->board.at(96) == '.' &&
+			this->board.at(97) == '.') {
+			this->moves.push_back("wk00");
+		}
+		if (this->castle[1] &&
+			this->board.at(92) == '.' &&
+			this->board.at(93) == '.' &&
+			this->board.at(94) == '.') {
+			this->moves.push_back("wq00");
+		}
 	}
-	if (this->castle[1] &&
-		this->board.at(92) == '.' &&
-		this->board.at(93) == '.' &&
-		this->board.at(94) == '.') {
-		this->moves.push_back("wq00");
+	else if (this->turn.compare("black")==0){
+		if (this->castle[2] &&
+			this->board.at(26) == '.' &&
+			this->board.at(27) == '.') {
+			this->moves.push_back("bk00");
+		}
+		if (this->castle[3] &&
+			this->board.at(22) == '.' &&
+			this->board.at(23) == '.' &&
+			this->board.at(24) == '.') {
+			this->moves.push_back("bq00");
+		}
 	}
 }
 
@@ -208,8 +223,56 @@ Node::gen_moves() {
 
 int
 Node::score() {
+	int score = 0;
 	for (size_t x = 0; x < this->board.length(); ++x) {
-
+		if (board.at(x) == 'P') {
+			score += this->P;
+			//score += this->pawn_pst[x];
+		}
+		else if (board.at(x) == 'p') {
+			score += -this->P;
+			//score += -this->pawn_pst[x];
+		}
+		else if (board.at(x) == 'N') {
+			score += this->N;
+			//score += this->knight_pst[x];
+		}
+		else if (board.at(x) == 'n') {
+			score += -this->N;
+			//score += this->knight_pst[x];
+		}
+		else if (board.at(x) == 'B') {
+			score += this->B;
+			//score += this->bishop_pst[x];
+		}
+		else if (board.at(x) == 'b') {
+			score += -this->B;
+			//score += this->bishop_pst[x];
+		}
+		else if (board.at(x) == 'R') {
+			score += this->R;
+			//score += this->rook_pst[x];
+		}
+		else if (board.at(x) == 'r') {
+			score += -this->R;
+			//score += this->rook_pst[x];
+		}
+		else if (board.at(x) == 'Q') {
+			score += this->Q;
+			//score += this->queen_pst[x];
+		}
+		else if (board.at(x) == 'q') {
+			score += -this->Q;
+			//score += this->queen_pst[x];
+		}
+		else if (board.at(x) == 'K') {
+			score += this->K;
+			//score += this->king_pst[x];
+		}
+		else if (board.at(x) == 'k') {
+			score += -this->K;
+			//score += this->king_pst[x];
+		}
 	}
-	return 0;
+	return score;
 }
