@@ -22,37 +22,44 @@ Node::print() {
 
 void
 Node::pawn(int x) {
-	if (this->board.at(x + up) == '.') {
+	static int di;
+	if (this->turn.compare("white")==0) {
+		di = up;
+	}
+	else if (this->turn.compare("black")==0) {
+		di = dn;
+	}
+	if (this->board.at(x + di) == '.') {
 		this->moves.push_back(
-			add_int_strings(x, x + up)
+			add_int_strings(x, x + di)
 		);
-		if (this->board.at(x + 2 * up) == '.') {
+		if (this->board.at(x + 2 * di) == '.') {
 			this->moves.push_back(
-				add_int_strings(x, x + 2 * up)
+				add_int_strings(x, x + 2 * di)
 			);
-			this->en_passant = x + up;
+			this->en_passant = x + di;
 		}
 	}
 	//cross
-	else if (in_array(this->board.at(x + up + rt),foe)) {
+	else if (in_array(this->board.at(x + di + rt),foe)) {
 		this->moves.push_back(
-			add_int_strings(x, x + up + rt)
+			add_int_strings(x, x + di + rt)
 		);
 	}
-	else if (in_array(this->board.at(x + up + lt), foe)) {
+	else if (in_array(this->board.at(x + di + lt), foe)) {
 		this->moves.push_back(
-			add_int_strings(x, x + up + lt)
+			add_int_strings(x, x + di + lt)
 		);
 	}
 	//en passant
-	else if (x + up + rt == this->en_passant) {
+	else if (x + di + rt == this->en_passant) {
 		this->moves.push_back(
-			add_int_strings(x, x + up + rt)
+			add_int_strings(x, x + di + rt)
 		);
 	}
-	else if (x + up + lt == this->en_passant) {
+	else if (x + di + lt == this->en_passant) {
 		this->moves.push_back(
-			add_int_strings(x, x + up + lt)
+			add_int_strings(x, x + di + lt)
 		);
 	}
 }

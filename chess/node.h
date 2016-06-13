@@ -20,9 +20,9 @@ public:
 		" RNBQKBNR\n"
 		"         \n"
 		"         \n";
-	std::string turn = "white";
-	bool castle[4] = {true,true,true,true}; //wk,wq,bk,bq
-	int en_passant = 0;
+	std::string turn;
+	bool castle[4]; //wk,wq,bk,bq
+	int en_passant;
 
 	std::vector<std::string> moves;
 

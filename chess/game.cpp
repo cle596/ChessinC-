@@ -13,6 +13,8 @@
 void
 Game::init() {
 	std::cout << "time to play chess cocksucka!\n";
+	this->root.turn = "white";
+	this->root.en_passant = 0;
 	this->root.castle[0] = true;
 	this->root.castle[1] = true;
 	this->root.castle[2] = true;
