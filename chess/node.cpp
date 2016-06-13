@@ -7,6 +7,7 @@
 
 #include "gendefs.h"
 #include "node.h"
+#include "score.h"
 
 void 
 Node::print() {
@@ -203,4 +204,12 @@ Node::gen_moves() {
 		}
 	}
 	return this->moves;
+}
+
+int
+Node::score() {
+	for (size_t x = 0; x < this->board.length(); ++x) {
+
+	}
+	return 0;
 }

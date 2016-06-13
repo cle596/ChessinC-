@@ -15,7 +15,7 @@ int main() {
 	Game g = Game();
 	g.init();
 
-	while (true) {	
+	while (true) {		
 		g.root.print();
 		g.take_input();
 		g.process_input();

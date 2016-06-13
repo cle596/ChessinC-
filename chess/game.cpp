@@ -23,6 +23,12 @@ Game::init() {
 	this->castle_input[1] = "wq00";
 	this->castle_input[2] = "bk00"; 
 	this->castle_input[3] = "bq00";
+	this->root.P = 100;
+	this->root.N = 320;
+	this->root.B = 330;
+	this->root.R = 500;
+	this->root.Q = 900;
+	this->root.K = 20000;
 }
 
 void

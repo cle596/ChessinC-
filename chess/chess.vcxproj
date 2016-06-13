@@ -123,6 +123,7 @@
     <ClInclude Include="gen.h" />
     <ClInclude Include="gendefs.h" />
     <ClInclude Include="game.h" />
+    <ClInclude Include="score.h" />
     <ClInclude Include="node.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

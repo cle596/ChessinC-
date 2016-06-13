@@ -44,5 +44,8 @@
     <ClInclude Include="game.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="score.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
