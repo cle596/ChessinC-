@@ -168,29 +168,37 @@ Node::king(int x) {
 std::vector<std::string>
 Node::gen_moves() {
 	std::vector<std::string> moves;
-	char pawn[] = { 'P','p' };
-	char knight[] = { 'N','n' };
-	char bishop[] = { 'B','b' };
-	char rook[] = { 'R','r' };
-	char queen[] = { 'Q','q' };
-	char king[] = { 'K','k' };
+	char pawn = 'P';
+	char knight = 'N';
+	char bishop = 'B';
+	char rook = 'R';
+	char queen = 'Q';
+	char king = 'K';
+	if (this->turn.compare("black") == 0) {
+		pawn = tolower(pawn);
+		knight = tolower(knight);
+		bishop = tolower(bishop);
+		rook = tolower(rook);
+		queen = tolower(queen);
+		king = tolower(king);
+	}
 	for (size_t x = 0; x < this->board.length(); ++x) {
-		if (in_array(board.at(x),pawn)) {
+		if (board.at(x)==pawn) {
 			this->pawn(x);
 		}
-		else if (in_array(board.at(x), knight)) {
+		else if (board.at(x)==knight) {
 			this->knight(x);
 		}
-		else if (in_array(board.at(x), bishop)) {
+		else if (board.at(x)==bishop) {
 			this->bishop(x);
 		}
-		else if (in_array(board.at(x), rook)) {
+		else if (board.at(x)==rook) {
 			this->rook(x);
 		}
-		else if (in_array(board.at(x), queen)) {
+		else if (board.at(x)==queen) {
 			this->queen(x);
 		}
-		else if (in_array(board.at(x), king)) {
+		else if (board.at(x)==king) {
 			this->king(x);
 		}
 	}

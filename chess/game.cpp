@@ -136,6 +136,13 @@ Game::process_input() {
 	this->moves = this->root.gen_moves();
 	if (in_vector(this->pos,this->moves)) {
 		this->update_root();
+		if (this->root.turn.compare("white") == 0) {
+			this->root.turn = "black";
+		}
+		else {
+			this->root.turn = "white";
+		}
+		this->root.moves.clear();
 	}
 	else {
 		std::cout << "not a legal move" << std::endl;
