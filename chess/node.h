@@ -115,6 +115,12 @@ public:
 		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 		0,  0,  0,  0,  0,  0,  0,  0,  0,  0
 	};
+	int npawn_pst[120];
+	int nknight_pst[120];
+	int nbishop_pst[120];
+	int nrook_pst[120];
+	int nqueen_pst[120];
+	int nking_pst[120];
 
 	std::vector<std::string> moves;
 
@@ -127,6 +133,7 @@ public:
 	void king(int);
 	std::vector<std::string> gen_moves();
 
+	int* rotate_pst(const int*,int*);
 	int score();
 
 };

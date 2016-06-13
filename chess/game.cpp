@@ -12,7 +12,6 @@
 
 void
 Game::init() {
-	std::cout << "time to play chess cocksucka!\n";
 	this->root.turn = "white";
 	this->root.en_passant = 0;
 	this->root.castle[0] = true;
@@ -23,12 +22,28 @@ Game::init() {
 	this->castle_input[1] = "wq00";
 	this->castle_input[2] = "bk00"; 
 	this->castle_input[3] = "bq00";
+	this->root.rotate_pst(this->root.pawn_pst, this->root.npawn_pst);
+	this->root.rotate_pst(this->root.knight_pst, this->root.nknight_pst);
+	this->root.rotate_pst(this->root.bishop_pst, this->root.nbishop_pst);
+	this->root.rotate_pst(this->root.rook_pst, this->root.nrook_pst);
+	this->root.rotate_pst(this->root.queen_pst, this->root.nqueen_pst);
+	this->root.rotate_pst(this->root.king_pst, this->root.nking_pst);
+	std::cout << "time to play chess cocksucka!" << std::endl;
 }
 
 void
 Game::take_input() {
 	std::cout << "make yo move sucka: ";
-	std::cin >> this->input;
+	while (true) {
+		std::cin >> this->input;
+		if (this->input.length() == 4) {
+			break;
+		}
+		else {
+			std::cout << "not a legal move" << std::endl;
+			std::cout << "make yo move sucka: ";
+		}
+	}
 	if (in_array(this->input, castle_input)) {
 		this->pos = this->input;
 	}

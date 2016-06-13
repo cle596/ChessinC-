@@ -9,6 +9,15 @@
 #include "node.h"
 #include "score.h"
 
+int*
+Node::rotate_pst(const int* pst,int* npst) {
+	for (size_t x = 0; x < 120; ++x) {
+		//std::cout << x << " " << 10 * (11 - (x / 10)) + (x % 10) << std::endl;
+		npst[x] = -pst[10*(11-(x/10))+(x%10)];
+	}
+	return npst;
+}
+
 void 
 Node::print() {
 	std::string formatted_board;
@@ -227,51 +236,51 @@ Node::score() {
 	for (size_t x = 0; x < this->board.length(); ++x) {
 		if (board.at(x) == 'P') {
 			score += this->P;
-			//score += this->pawn_pst[x];
+			score += this->pawn_pst[x];
 		}
 		else if (board.at(x) == 'p') {
 			score += -this->P;
-			//score += -this->pawn_pst[x];
+			score += this->npawn_pst[x];
 		}
 		else if (board.at(x) == 'N') {
 			score += this->N;
-			//score += this->knight_pst[x];
+			score += this->knight_pst[x];
 		}
 		else if (board.at(x) == 'n') {
 			score += -this->N;
-			//score += this->knight_pst[x];
+			score += this->nknight_pst[x];
 		}
 		else if (board.at(x) == 'B') {
 			score += this->B;
-			//score += this->bishop_pst[x];
+			score += this->bishop_pst[x];
 		}
 		else if (board.at(x) == 'b') {
 			score += -this->B;
-			//score += this->bishop_pst[x];
+			score += this->nbishop_pst[x];
 		}
 		else if (board.at(x) == 'R') {
 			score += this->R;
-			//score += this->rook_pst[x];
+			score += this->rook_pst[x];
 		}
 		else if (board.at(x) == 'r') {
 			score += -this->R;
-			//score += this->rook_pst[x];
+			score += this->nrook_pst[x];
 		}
 		else if (board.at(x) == 'Q') {
 			score += this->Q;
-			//score += this->queen_pst[x];
+			score += this->queen_pst[x];
 		}
 		else if (board.at(x) == 'q') {
 			score += -this->Q;
-			//score += this->queen_pst[x];
+			score += this->nqueen_pst[x];
 		}
 		else if (board.at(x) == 'K') {
 			score += this->K;
-			//score += this->king_pst[x];
+			score += this->king_pst[x];
 		}
 		else if (board.at(x) == 'k') {
 			score += -this->K;
-			//score += this->king_pst[x];
+			score += this->nking_pst[x];
 		}
 	}
 	return score;
