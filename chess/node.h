@@ -122,6 +122,8 @@ public:
 	int nqueen_pst[120];
 	int nking_pst[120];
 
+	char foe[6] = { 'p','n','b','r','q','k' };
+
 	std::vector<std::string> moves;
 
 	void print();

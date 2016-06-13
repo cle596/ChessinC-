@@ -178,9 +178,15 @@ Game::process_input() {
 		this->update_root();
 		if (this->root.turn.compare("white") == 0) {
 			this->root.turn = "black";
+			for (int x = 0; x < 6; ++x) {
+				this->root.foe[x] = toupper(this->root.foe[x]);
+			}
 		}
 		else {
 			this->root.turn = "white";
+			for (int x = 0; x < 6; ++x) {
+				this->root.foe[x] = tolower(this->root.foe[x]);
+			}
 		}
 		this->root.moves.clear();
 	}

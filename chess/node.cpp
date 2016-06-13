@@ -12,7 +12,6 @@
 int*
 Node::rotate_pst(const int* pst,int* npst) {
 	for (size_t x = 0; x < 120; ++x) {
-		//std::cout << x << " " << 10 * (11 - (x / 10)) + (x % 10) << std::endl;
 		npst[x] = -pst[10*(11-(x/10))+(x%10)];
 	}
 	return npst;
@@ -51,12 +50,12 @@ Node::pawn(int x) {
 		}
 	}
 	//cross
-	else if (in_array(this->board.at(x + di + rt),foe)) {
+	else if (in_array(this->board.at(x + di + rt),this->foe)) {
 		this->moves.push_back(
 			add_int_strings(x, x + di + rt)
 		);
 	}
-	else if (in_array(this->board.at(x + di + lt), foe)) {
+	else if (in_array(this->board.at(x + di + lt), this->foe)) {
 		this->moves.push_back(
 			add_int_strings(x, x + di + lt)
 		);
@@ -78,7 +77,7 @@ void
 Node::knight(int x) {
 	for (int y = 0; y < 8; ++y) {
 		if (this->board.at(x + Nmoves[y]) == '.' ||
-			in_array(this->board.at(x + Nmoves[y]), foe)) {
+			in_array(this->board.at(x + Nmoves[y]), this->foe)) {
 			this->moves.push_back(
 				add_int_strings(x, x + Nmoves[y])
 			);
@@ -91,13 +90,13 @@ Node::bishop(int x) {
 	for (int y = 0; y < 4; ++y) {
 		int z = 1;
 		while (this->board.at(x + z*Bmoves[y]) == '.' ||
-			in_array(this->board.at(x + z*Bmoves[y]), foe)) {
+			in_array(this->board.at(x + z*Bmoves[y]), this->foe)) {
 			if (this->board.at(x + z*Bmoves[y]) == '.') {
 				this->moves.push_back(
 					add_int_strings(x, x + z*Bmoves[y])
 				);
 			}
-			else if (in_array(this->board.at(x + z*Bmoves[y]), foe)) {
+			else if (in_array(this->board.at(x + z*Bmoves[y]), this->foe)) {
 				this->moves.push_back(
 					add_int_strings(x, x + z*Bmoves[y])
 				);
@@ -113,13 +112,13 @@ Node::rook(int x) {
 	for (int y = 0; y < 4; ++y) {
 		int z = 1;
 		while (this->board.at(x + z*Rmoves[y]) == '.' ||
-			in_array(this->board.at(x + z*Rmoves[y]), foe)) {
+			in_array(this->board.at(x + z*Rmoves[y]), this->foe)) {
 			if (this->board.at(x + z*Rmoves[y]) == '.') {
 				this->moves.push_back(
 					add_int_strings(x, x + z*Rmoves[y])
 				);
 			}
-			else if (in_array(this->board.at(x + z*Rmoves[y]), foe)) {
+			else if (in_array(this->board.at(x + z*Rmoves[y]), this->foe)) {
 				this->moves.push_back(
 					add_int_strings(x, x + z*Rmoves[y])
 				);
@@ -135,13 +134,13 @@ Node::queen(int x) {
 	for (int y = 0; y < 8; ++y) {
 		int z = 1;
 		while (this->board.at(x + z*Kmoves[y]) == '.' ||
-			in_array(this->board.at(x + z*Kmoves[y]), foe)) {
+			in_array(this->board.at(x + z*Kmoves[y]), this->foe)) {
 			if (this->board.at(x + z*Kmoves[y]) == '.') {
 				this->moves.push_back(
 					add_int_strings(x, x + z*Kmoves[y])
 				);
 			}
-			else if (in_array(this->board.at(x + z*Kmoves[y]), foe)) {
+			else if (in_array(this->board.at(x + z*Kmoves[y]), this->foe)) {
 				this->moves.push_back(
 					add_int_strings(x, x + z*Kmoves[y])
 				);
@@ -156,7 +155,7 @@ void
 Node::king(int x) {
 	for (int y = 0; y < 8; ++y) {
 		if (this->board.at(x + Kmoves[y]) == '.' ||
-			in_array(this->board.at(x + Kmoves[y]), foe)) {
+			in_array(this->board.at(x + Kmoves[y]), this->foe)) {
 			this->moves.push_back(
 				add_int_strings(x, x + Kmoves[y])
 			);
