@@ -161,23 +161,29 @@ Node::king(int x) {
 std::vector<std::string>
 Node::gen_moves() {
 	std::vector<std::string> moves;
+	char pawn[] = { 'P','p' };
+	char knight[] = { 'N','n' };
+	char bishop[] = { 'B','b' };
+	char rook[] = { 'R','r' };
+	char queen[] = { 'Q','q' };
+	char king[] = { 'K','k' };
 	for (size_t x = 0; x < this->board.length(); ++x) {
-		if (this->board.at(x) == 'P') {
+		if (in_array(board.at(x),pawn)) {
 			this->pawn(x);
 		}
-		else if (board.at(x) == 'N') {
+		else if (in_array(board.at(x), knight)) {
 			this->knight(x);
 		}
-		else if (board.at(x) == 'B') {
+		else if (in_array(board.at(x), bishop)) {
 			this->bishop(x);
 		}
-		else if (board.at(x) == 'R') {
+		else if (in_array(board.at(x), rook)) {
 			this->rook(x);
 		}
-		else if (board.at(x) == 'Q') {
+		else if (in_array(board.at(x), queen)) {
 			this->queen(x);
 		}
-		else if (board.at(x) == 'K') {
+		else if (in_array(board.at(x), king)) {
 			this->king(x);
 		}
 	}

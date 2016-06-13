@@ -21,7 +21,7 @@ public:
 		"         \n"
 		"         \n";
 	std::string turn = "white";
-	bool castle[4] = {true}; //wk,wq,bk,bq
+	bool castle[4] = {true,true,true,true}; //wk,wq,bk,bq
 	int en_passant = 0;
 
 	std::vector<std::string> moves;
