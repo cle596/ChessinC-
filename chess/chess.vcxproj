@@ -120,8 +120,6 @@
     <ClCompile Include="test.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="chess.h" />
-    <ClInclude Include="gen.h" />
     <ClInclude Include="gendefs.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="search.h" />

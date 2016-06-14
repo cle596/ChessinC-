@@ -32,12 +32,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="chess.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="gen.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="gendefs.h">
       <Filter>Source Files</Filter>
     </ClInclude>

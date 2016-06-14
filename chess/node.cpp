@@ -33,12 +33,18 @@ Node::Node()
 
 Node::Node(const Node & n)
 {
-	this->turn = "white";
-	this->en_passant = 0;
-	this->castle[0] = true;
-	this->castle[1] = true;
-	this->castle[2] = true;
-	this->castle[3] = true;
+	this->board = n.board;
+	if (n.turn.compare("white") == 0) {
+		this->turn = "black";
+	}
+	else {
+		this->turn = "white";
+	}
+	this->en_passant = n.en_passant;
+	this->castle[0] = n.castle[0];
+	this->castle[1] = n.castle[1];
+	this->castle[2] = n.castle[2];
+	this->castle[3] = n.castle[3];
 	this->castle_input[0] = "wk00";
 	this->castle_input[1] = "wq00";
 	this->castle_input[2] = "bk00";
@@ -54,26 +60,26 @@ Node::Node(const Node & n)
 void
 Node::update_board(std::string pos) {
 	if (in_array(pos, castle_input)) {
-		if (pos == castle_input[0]) {
+		if (pos == this->castle_input[0]) {
 			this->board.replace(95, 1, ".");
 			this->board.replace(96, 1, "R");
 			this->board.replace(97, 1, "K");
 			this->board.replace(98, 1, ".");
 		}
-		else if (pos == castle_input[1]) {
+		else if (pos == this->castle_input[1]) {
 			this->board.replace(91, 1, ".");
 			this->board.replace(92, 1, ".");
 			this->board.replace(93, 1, "K");
 			this->board.replace(94, 1, "R");
 			this->board.replace(95, 1, ".");
 		}
-		else if (pos == castle_input[1]) {
+		else if (pos == this->castle_input[1]) {
 			this->board.replace(25, 1, ".");
 			this->board.replace(26, 1, "r");
 			this->board.replace(27, 1, "k");
 			this->board.replace(28, 1, ".");
 		}
-		else if (pos == castle_input[3]) {
+		else if (pos == this->castle_input[3]) {
 			this->board.replace(21, 1, ".");
 			this->board.replace(22, 1, ".");
 			this->board.replace(23, 1, "k");
