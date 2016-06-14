@@ -16,8 +16,8 @@ int main() {
 	Game g = Game();
 	g.init();
 
-	Search s = Search(&g);
-	//s.recurse();
+	Search s = Search();
+	//s.recurse(&g.root);
 
 	while (true) {		
 		std::cout << "score: " << g.root.score() << std::endl;
