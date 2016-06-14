@@ -9,6 +9,117 @@
 #include "node.h"
 #include "score.h"
 
+#define in_vector(e,vec) std::find(vec.begin(), vec.end(), e) != vec.end()
+#define in_array(e,arr) std::find(std::begin(arr), std::end(arr), e) != std::end(arr)
+
+Node::Node()
+{
+	this->turn = "white";
+	this->en_passant = 0;
+	this->castle[0] = true;
+	this->castle[1] = true;
+	this->castle[2] = true;
+	this->castle[3] = true;
+	this->castle_input[0] = "wk00";
+	this->castle_input[1] = "wq00";
+	this->castle_input[2] = "bk00";
+	this->castle_input[3] = "bq00";
+	this->rotate_pst(this->pawn_pst, this->npawn_pst);
+	this->rotate_pst(this->knight_pst, this->nknight_pst);
+	this->rotate_pst(this->bishop_pst, this->nbishop_pst);
+	this->rotate_pst(this->rook_pst, this->nrook_pst);
+	this->rotate_pst(this->queen_pst, this->nqueen_pst);
+	this->rotate_pst(this->king_pst, this->nking_pst);
+}
+
+Node::Node(const Node & n)
+{
+}
+
+void
+Node::update_board(std::string pos) {
+	if (in_array(pos, castle_input)) {
+		if (pos == castle_input[0]) {
+			this->board.replace(95, 1, ".");
+			this->board.replace(96, 1, "R");
+			this->board.replace(97, 1, "K");
+			this->board.replace(98, 1, ".");
+		}
+		else if (pos == castle_input[1]) {
+			this->board.replace(91, 1, ".");
+			this->board.replace(92, 1, ".");
+			this->board.replace(93, 1, "K");
+			this->board.replace(94, 1, "R");
+			this->board.replace(95, 1, ".");
+		}
+		else if (pos == castle_input[1]) {
+			this->board.replace(25, 1, ".");
+			this->board.replace(26, 1, "r");
+			this->board.replace(27, 1, "k");
+			this->board.replace(28, 1, ".");
+		}
+		else if (pos == castle_input[3]) {
+			this->board.replace(21, 1, ".");
+			this->board.replace(22, 1, ".");
+			this->board.replace(23, 1, "k");
+			this->board.replace(24, 1, "r");
+			this->board.replace(25, 1, ".");
+		}
+	}
+	else {
+		int from = std::stoi(pos.substr(0, 2), nullptr);
+		int to = std::stoi(pos.substr(2, 2), nullptr);
+		if (this->board.at(from) == 'K') {
+			this->castle[0] = false;
+			this->castle[1] = false;
+		}
+		else if (this->board.at(from) == 'R'
+			&& from == 98) {
+			this->castle[0] = false;
+		}
+		else if (this->board.at(from) == 'R'
+			&& from == 91) {
+			this->castle[1] = false;
+		}
+		else if (this->board.at(from) == 'k') {
+			this->castle[2] = false;
+			this->castle[3] = false;
+		}
+		else if (this->board.at(from) == 'r'
+			&& from == 28) {
+			this->castle[2] = false;
+		}
+		else if (this->board.at(from) == 'r'
+			&& from == 21) {
+			this->castle[3] = false;
+		}
+		else if (this->board.at(from) == 'P' &&
+			to == from - 20) {
+			this->en_passant = from - 10;
+		}
+		else if (this->board.at(from) == 'p' &&
+			to == from + 20) {
+			this->en_passant = from + 10;
+		}
+		else if (this->board.at(from) == 'P' &&
+			to == this->en_passant) {
+			this->board.at(this->en_passant + 10) = '.';
+			this->en_passant = 0;
+		}
+		else if (this->board.at(from) == 'p' &&
+			to == this->en_passant) {
+			this->board.at(this->en_passant - 10) = '.';
+			this->en_passant = 0;
+		}
+		this->board.replace(
+			to,
+			1,
+			std::string(1, this->board.at(from))
+		);
+		this->board.replace(from, 1, ".");
+	}
+}
+
 int*
 Node::rotate_pst(const int* pst,int* npst) {
 	for (size_t x = 0; x < 120; ++x) {
@@ -17,7 +128,7 @@ Node::rotate_pst(const int* pst,int* npst) {
 	return npst;
 }
 
-void 
+void
 Node::print() {
 	std::string formatted_board;
 	for (size_t x = 0; x < this->board.length(); ++x) {

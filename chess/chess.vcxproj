@@ -116,6 +116,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="node.cpp" />
     <ClCompile Include="game.cpp" />
+    <ClCompile Include="search.cpp" />
     <ClCompile Include="test.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -123,6 +124,7 @@
     <ClInclude Include="gen.h" />
     <ClInclude Include="gendefs.h" />
     <ClInclude Include="game.h" />
+    <ClInclude Include="search.h" />
     <ClInclude Include="node.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -22,6 +22,7 @@ public:
 		"         \n";
 	std::string turn;
 	bool castle[4]; //wk,wq,bk,bq
+	std::string castle_input[4];
 	int en_passant;
 
 	const int P = 100;
@@ -125,6 +126,11 @@ public:
 	char foe[6] = { 'p','n','b','r','q','k' };
 
 	std::vector<std::string> moves;
+
+	Node();
+	Node(const Node& n);
+
+	void update_board(std::string);
 
 	void print();
 	void pawn(int);
