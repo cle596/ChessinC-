@@ -16,7 +16,8 @@ int main() {
 	g.init();
 
 	Search s = Search();
-	s.tcurse(g.root, 10);
+	s.tcurse(g.root, 2);
+	std::cout << s.bmove << std::endl;
 
 	while (true) {		
 		std::cout << "score: " << g.root.score() << std::endl;
