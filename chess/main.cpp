@@ -6,8 +6,6 @@
 #include <typeinfo>
 #include <ctime>
 
-#include "chess.h"
-#include "gen.h"
 #include "node.h"
 #include "game.h"
 #include "search.h"
@@ -18,7 +16,7 @@ int main() {
 	g.init();
 
 	Search s = Search();
-	s.tcurse(g.root, 4);
+	s.tcurse(g.root, 10);
 
 	while (true) {		
 		std::cout << "score: " << g.root.score() << std::endl;

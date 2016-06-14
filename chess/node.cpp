@@ -7,7 +7,6 @@
 
 #include "gendefs.h"
 #include "node.h"
-#include "score.h"
 
 #define in_vector(e,vec) std::find(vec.begin(), vec.end(), e) != vec.end()
 #define in_array(e,arr) std::find(std::begin(arr), std::end(arr), e) != std::end(arr)

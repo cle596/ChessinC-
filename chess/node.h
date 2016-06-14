@@ -25,6 +25,8 @@ public:
 	std::string castle_input[4];
 	int en_passant;
 
+	int nscore;
+
 	const int P = 100;
 	const int N = 320;
 	const int B = 330;

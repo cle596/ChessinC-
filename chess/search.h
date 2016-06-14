@@ -7,9 +7,10 @@
 
 class Search {
 public:
-	int max, min;
+
 	std::string bmove;
 	
-	void recurse(Node&,int);
+	int recurse(Node&,int,int,int);
 	void tcurse(Node&, int);
+
 };
