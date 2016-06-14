@@ -34,6 +34,22 @@ Node::Node()
 
 Node::Node(const Node & n)
 {
+	this->turn = "white";
+	this->en_passant = 0;
+	this->castle[0] = true;
+	this->castle[1] = true;
+	this->castle[2] = true;
+	this->castle[3] = true;
+	this->castle_input[0] = "wk00";
+	this->castle_input[1] = "wq00";
+	this->castle_input[2] = "bk00";
+	this->castle_input[3] = "bq00";
+	this->rotate_pst(this->pawn_pst, this->npawn_pst);
+	this->rotate_pst(this->knight_pst, this->nknight_pst);
+	this->rotate_pst(this->bishop_pst, this->nbishop_pst);
+	this->rotate_pst(this->rook_pst, this->nrook_pst);
+	this->rotate_pst(this->queen_pst, this->nqueen_pst);
+	this->rotate_pst(this->king_pst, this->nking_pst);
 }
 
 void
