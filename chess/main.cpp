@@ -4,6 +4,7 @@
 #include <vector>
 #include <algorithm>
 #include <typeinfo>
+#include <ctime>
 
 #include "chess.h"
 #include "gen.h"
@@ -17,7 +18,7 @@ int main() {
 	g.init();
 
 	Search s = Search();
-	s.recurse(&g.root);
+	s.tcurse(g.root, 4);
 
 	while (true) {		
 		std::cout << "score: " << g.root.score() << std::endl;

@@ -10,5 +10,6 @@ public:
 	int max, min;
 	std::string bmove;
 	
-	void recurse(Node* n);
+	void recurse(Node&,int);
+	void tcurse(Node&, int);
 };
