@@ -119,14 +119,17 @@ const int Node::Kmoves[] = {
 	dn + lt,lt,up + lt
 };
 
+void Node::castle_reset() {
+	for (size_t x = 0; x < 4; ++x) {
+		this->castle[x] = true;
+	}
+}
+
 Node::Node()
 {
 	this->turn = "white";
 	this->en_passant = 0;
-	this->castle[0] = true;
-	this->castle[1] = true;
-	this->castle[2] = true;
-	this->castle[3] = true;
+	this->castle_reset();
 	this->castle_input[0] = "wk00";
 	this->castle_input[1] = "wq00";
 	this->castle_input[2] = "bk00";
@@ -263,168 +266,6 @@ Node::print() {
 	std::cout << formatted_board << std::endl;
 }
 
-void
-Node::pawn(int x) {
-	static int di;
-	if (this->turn.compare("white")==0) {
-		di = up;
-	}
-	else if (this->turn.compare("black")==0) {
-		di = dn;
-	}
-	if (this->board.at(x + di) == '.') {
-		this->moves.push_back(
-			add_int_strings(x, x + di)
-		);
-		if (in_array(x,this->dub) &&
-			this->board.at(x + 2 * di) == '.') {
-			this->moves.push_back(
-				add_int_strings(x, x + 2 * di)
-			);
-		}
-	}
-	//cross
-	if (in_array(this->board.at(x + di + rt),this->foe)) {
-		this->moves.push_back(
-			add_int_strings(x, x + di + rt)
-		);
-	}
-	if (in_array(this->board.at(x + di + lt), this->foe)) {
-		this->moves.push_back(
-			add_int_strings(x, x + di + lt)
-		);
-	}
-	//en passant
-	if (x + di + rt == this->en_passant) {
-		this->moves.push_back(
-			add_int_strings(x, x + di + rt)
-		);
-	}
-	if (x + di + lt == this->en_passant) {
-		this->moves.push_back(
-			add_int_strings(x, x + di + lt)
-		);
-	}
-}
-
-/*
-void
-Node::knight(int x) {
-	for (int y = 0; y < 8; ++y) {
-		if (this->board.at(x + Nmoves[y]) == '.' ||
-			in_array(this->board.at(x + Nmoves[y]), this->foe)) {
-			this->moves.push_back(
-				add_int_strings(x, x + Nmoves[y])
-			);
-		}
-	}
-}
-*/
-
-void
-Node::bishop(int x) {
-	for (int y = 0; y < 4; ++y) {
-		int z = 1;
-		while (this->board.at(x + z*Bmoves[y]) == '.' ||
-			in_array(this->board.at(x + z*Bmoves[y]), this->foe)) {
-			if (this->board.at(x + z*Bmoves[y]) == '.') {
-				this->moves.push_back(
-					add_int_strings(x, x + z*Bmoves[y])
-				);
-			}
-			else if (in_array(this->board.at(x + z*Bmoves[y]), this->foe)) {
-				this->moves.push_back(
-					add_int_strings(x, x + z*Bmoves[y])
-				);
-				break;
-			}
-			z += 1;
-		}
-	}
-}
-
-void
-Node::rook(int x) {
-	for (int y = 0; y < 4; ++y) {
-		int z = 1;
-		while (this->board.at(x + z*Rmoves[y]) == '.' ||
-			in_array(this->board.at(x + z*Rmoves[y]), this->foe)) {
-			if (this->board.at(x + z*Rmoves[y]) == '.') {
-				this->moves.push_back(
-					add_int_strings(x, x + z*Rmoves[y])
-				);
-			}
-			else if (in_array(this->board.at(x + z*Rmoves[y]), this->foe)) {
-				this->moves.push_back(
-					add_int_strings(x, x + z*Rmoves[y])
-				);
-				break;
-			}
-			z += 1;
-		}
-	}
-}
-
-void
-Node::queen(int x) {
-	for (int y = 0; y < 8; ++y) {
-		int z = 1;
-		while (this->board.at(x + z*Kmoves[y]) == '.' ||
-			in_array(this->board.at(x + z*Kmoves[y]), this->foe)) {
-			if (this->board.at(x + z*Kmoves[y]) == '.') {
-				this->moves.push_back(
-					add_int_strings(x, x + z*Kmoves[y])
-				);
-			}
-			else if (in_array(this->board.at(x + z*Kmoves[y]), this->foe)) {
-				this->moves.push_back(
-					add_int_strings(x, x + z*Kmoves[y])
-				);
-				break;
-			}
-			z += 1;
-		}
-	}
-}
-
-void
-Node::king(int x) {
-	for (int y = 0; y < 8; ++y) {
-		if (this->board.at(x + Kmoves[y]) == '.' ||
-			in_array(this->board.at(x + Kmoves[y]), this->foe)) {
-			this->moves.push_back(
-				add_int_strings(x, x + Kmoves[y])
-			);
-		}
-	}
-	if (this->turn.compare("white") == 0) {
-		if (this->castle[0] &&
-			this->board.at(96) == '.' &&
-			this->board.at(97) == '.') {
-			this->moves.push_back("wk00");
-		}
-		if (this->castle[1] &&
-			this->board.at(92) == '.' &&
-			this->board.at(93) == '.' &&
-			this->board.at(94) == '.') {
-			this->moves.push_back("wq00");
-		}
-	}
-	else if (this->turn.compare("black")==0){
-		if (this->castle[2] &&
-			this->board.at(26) == '.' &&
-			this->board.at(27) == '.') {
-			this->moves.push_back("bk00");
-		}
-		if (this->castle[3] &&
-			this->board.at(22) == '.' &&
-			this->board.at(23) == '.' &&
-			this->board.at(24) == '.') {
-			this->moves.push_back("bq00");
-		}
-	}
-}
-
 std::vector<std::string>
 Node::gen_moves() {
 	std::vector<std::string> moves;
@@ -555,3 +396,4 @@ void Node::flip_dub() {
 		}
 	}
 }
+

@@ -118,6 +118,11 @@
     <ClCompile Include="game.cpp" />
     <ClCompile Include="search.cpp" />
     <ClCompile Include="knight.cpp" />
+    <ClCompile Include="pawn.cpp" />
+    <ClCompile Include="bishop.cpp" />
+    <ClCompile Include="rook.cpp" />
+    <ClCompile Include="queen.cpp" />
+    <ClCompile Include="king.cpp" />
     <ClCompile Include="test.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -83,5 +83,6 @@ public:
 	void flip_turn();
 	void flip_dub();
 
+	void castle_reset();
 };
 
