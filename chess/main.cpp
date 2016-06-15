@@ -17,9 +17,7 @@ int main() {
 
 	Search s = Search();
 
-	while (true) {		
-		std::cout << g.root.foe[0] << std::endl;
-		std::cout << g.root.dub[0] << std::endl;
+	while (true) {
 		g.root.print();
 		if (g.root.turn.compare("white")==0) {
 			g.take_input("");

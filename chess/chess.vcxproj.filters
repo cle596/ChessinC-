@@ -30,11 +30,11 @@
     <ClCompile Include="search.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="knight.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="gendefs.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="node.h">
       <Filter>Source Files</Filter>
     </ClInclude>

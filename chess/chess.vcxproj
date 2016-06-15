@@ -117,10 +117,10 @@
     <ClCompile Include="node.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="search.cpp" />
+    <ClCompile Include="knight.cpp" />
     <ClCompile Include="test.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="gendefs.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="search.h" />
     <ClInclude Include="node.h" />
