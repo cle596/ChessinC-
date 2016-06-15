@@ -9,8 +9,9 @@ class Search {
 public:
 
 	std::string bmove;
+	int depth;
 	
 	int recurse(Node&,int,int,int);
-	void tcurse(Node&, int);
+	void tcurse(Node&);
 
 };

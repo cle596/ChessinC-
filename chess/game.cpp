@@ -10,7 +10,7 @@
 
 void
 Game::init() {
-	std::cout << "time to play chess cocksucka!" << std::endl;
+	std::cout << "time\nto play\nchess!" << std::endl;
 }
 
 void

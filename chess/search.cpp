@@ -11,13 +11,11 @@ Search::recurse(Node& n,int d,int max,int min)
 	if (d > 0) {
 		for (size_t x = 0; x < n.moves.size(); ++x) {
 			Node nn = Node(n);
-			nn.flips();
 			nn.update_board(n.moves.at(x));
-			//nn.print();
-			//std::cout << nn.score() << std::endl;
+			nn.flips();
 			score = this->recurse(nn, d - 1, max, min);
-			if (score<max || //not equal seems better
-				score>min) {
+			if (score<=max || //not equal seems better
+				score>=min) {
 				break;
 			}
 			else if (score > max &&
@@ -27,7 +25,7 @@ Search::recurse(Node& n,int d,int max,int min)
 			else if (score < min &&
 				n.turn.compare("black")==0) {
 				min = score;
-				if (d == 3) {
+				if (d == this->depth) {
 					this->bmove.assign(n.moves.at(x));
 				}
 			}
@@ -45,9 +43,9 @@ Search::recurse(Node& n,int d,int max,int min)
 }
 
 void 
-Search::tcurse(Node& n, int d) {
+Search::tcurse(Node& n) {
 	int inf = 100000;
 	clock_t t = clock();
-	this->recurse(n,d,-inf,inf);
+	this->recurse(n,this->depth,-inf,inf);
 	std::cout << "time: " << (clock() - t)/1000.0 << std::endl;
 }

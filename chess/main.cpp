@@ -16,20 +16,17 @@ int main() {
 	g.init();
 
 	Search s = Search();
+	s.depth = 4;
 
 	while (true) {
 		g.root.print();
-		g.root.gen_moves();
-		for (size_t x = 0; x < g.root.moves.size(); ++x) {
-			std::cout << g.root.moves.at(x) << std::endl;
-		}
 		if (g.root.turn.compare("white")==0) {
 			g.take_input("");
 			g.process_input();
 		}
 		else {
-			//s.tcurse(g.root, 3);
-			//std::cout << s.bmove << std::endl;
+			s.tcurse(g.root);
+			std::cout << s.bmove << std::endl;
 			g.take_input("");
 			g.process_input();
 		}
