@@ -307,6 +307,7 @@ Node::pawn(int x) {
 	}
 }
 
+/*
 void
 Node::knight(int x) {
 	for (int y = 0; y < 8; ++y) {
@@ -318,6 +319,7 @@ Node::knight(int x) {
 		}
 	}
 }
+*/
 
 void
 Node::bishop(int x) {

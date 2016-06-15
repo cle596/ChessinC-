@@ -1,4 +1,3 @@
-/*
 #include "node.h"
 #include "gendefs.h"
 
@@ -16,4 +15,3 @@ Node::knight(int x) {
 		}
 	}
 }
-*/
