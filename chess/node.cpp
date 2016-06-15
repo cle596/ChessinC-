@@ -6,102 +6,7 @@
 #include <typeinfo>
 
 #include "node.h"
-//#include "gendefs.h"
-
-#define add_int_strings(x,y) std::to_string(x).append(std::to_string(y))
-#define in_vector(e,vec) std::find(vec.begin(), vec.end(), e) != vec.end()
-#define in_array(e,arr) std::find(std::begin(arr), std::end(arr), e) != std::end(arr)
-
-const int Node::pawn_pst[120] = {
-	0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-	0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-	0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-	0, 50, 50, 50, 50, 50, 50, 50, 50,  0,
-	0, 10, 10, 20, 30, 30, 20, 10, 10,  0,
-	0,  5,  5, 10, 25, 25, 10,  5,  5,  0,
-	0,  0,  0,  0, 20, 20,  0,  0,  0,  0,
-	0,  5, -5,-10,  0,  0,-10, -5,  5,  0,
-	0,  5, 10, 10,-20,-20, 10, 10,  5,  0,
-	0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-	0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-	0,  0,  0,  0,  0,  0,  0,  0,  0,  0
-};
-
-const int Node::knight_pst[120] = {
-	0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-	0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-	0,-50,-40,-30,-30,-30,-30,-40,-50,  0,
-	0,-40,-20,  0,  0,  0,  0,-20,-40,  0,
-	0,-30,  0, 10, 15, 15, 10,  0,-30,  0,
-	0,-30,  5, 15, 20, 20, 15,  5,-30,  0,
-	0,-30,  0, 15, 20, 20, 15,  0,-30,  0,
-	0,-30,  5, 10, 15, 15, 10,  5,-30,  0,
-	0,-40,-20,  0,  5,  5,  0,-20,-40,  0,
-	0,-50,-40,-30,-30,-30,-30,-40,-50,  0,
-	0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-	0,  0,  0,  0,  0,  0,  0,  0,  0,  0
-};
-
-const int Node::bishop_pst[120] = {
-	0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-	0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-	0,-20,-10,-10,-10,-10,-10,-10,-20,  0,
-	0,-10,  0,  0,  0,  0,  0,  0,-10,  0,
-	0,-10,  0,  5, 10, 10,  5,  0,-10,  0,
-	0,-10,  5,  5, 10, 10,  5,  5,-10,  0,
-	0,-10,  0, 10, 10, 10, 10,  0,-10,  0,
-	0,-10, 10, 10, 10, 10, 10, 10,-10,  0,
-	0,-10,  5,  0,  0,  0,  0,  5,-10,  0,
-	0,-20,-10,-10,-10,-10,-10,-10,-20,  0,
-	0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-	0,  0,  0,  0,  0,  0,  0,  0,  0,  0
-};
-
-const int Node::rook_pst[120] = {
-	0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-	0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-	0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-	0,  5, 10, 10, 10, 10, 10, 10,  5,  0,
-	0, -5,  0,  0,  0,  0,  0,  0, -5,  0,
-	0, -5,  0,  0,  0,  0,  0,  0, -5,  0,
-	0, -5,  0,  0,  0,  0,  0,  0, -5,  0,
-	0, -5,  0,  0,  0,  0,  0,  0, -5,  0,
-	0, -5,  0,  0,  0,  0,  0,  0, -5,  0,
-	0,  0,  0,  0,  5,  5,  0,  0,  0,  0,
-	0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-	0,  0,  0,  0,  0,  0,  0,  0,  0,  0
-};
-
-const int Node::queen_pst[120] = {
-	0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-	0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-	0,-20,-10,-10, -5, -5,-10,-10,-20,  0,
-	0,-10,  0,  0,  0,  0,  0,  0,-10,  0,
-	0,-10,  0,  5,  5,  5,  5,  0,-10,  0,
-	0, -5,  0,  5,  5,  5,  5,  0, -5,  0,
-	0,  0,  0,  5,  5,  5,  5,  0, -5,  0,
-	0,-10,  5,  5,  5,  5,  5,  0,-10,  0,
-	0,-10,  0,  5,  0,  0,  0,  0,-10,  0,
-	0,-20,-10,-10, -5, -5,-10,-10,-20,  0,
-	0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-	0,  0,  0,  0,  0,  0,  0,  0,  0,  0
-};
-
-const int Node::king_pst[120] = {
-	0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-	0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-	0,-30,-40,-40,-50,-50,-40,-40,-30,  0,
-	0,-30,-40,-40,-50,-50,-40,-40,-30,  0,
-	0,-30,-40,-40,-50,-50,-40,-40,-30,  0,
-	0,-30,-40,-40,-50,-50,-40,-40,-30,  0,
-	0,-20,-30,-30,-40,-40,-30,-30,-20,  0,
-	0,-10,-20,-20,-20,-20,-20,-20,-10,  0,
-	0, 20, 20,  0,  0,  0,  0, 20, 20,  0,
-	0, 20, 30, 10,  0,  0, 10, 30, 20,  0,
-	0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-	0,  0,  0,  0,  0,  0,  0,  0,  0,  0
-};
-
+#include "macros.h"
 
 int*
 Node::rotate_pst(const int* pst, int* npst) {
@@ -110,13 +15,6 @@ Node::rotate_pst(const int* pst, int* npst) {
 	}
 	return npst;
 }
-
-int Node::npawn_pst[120];
-int Node::nknight_pst[120];
-int Node::nbishop_pst[120];
-int Node::nrook_pst[120];
-int Node::nqueen_pst[120];
-int Node::nking_pst[120];
 
 void 
 Node::set_npst() {
@@ -158,8 +56,6 @@ void Node::castle_copy(const bool* b,bool* bb) {
 	}
 }
 
-const std::string Node::castle_input[4] = { "wk00" ,"wq00","bk00","bq00" };
-
 Node::Node()
 {
 	this->turn = "white";
@@ -180,35 +76,21 @@ void
 Node::update_board(std::string pos) {
 	if (in_array(pos, castle_input)) {
 		if (pos == this->castle_input[0]) {
-			this->board.replace(95, 1, ".");
-			this->board.replace(96, 1, "R");
-			this->board.replace(97, 1, "K");
-			this->board.replace(98, 1, ".");
+			this->board.replace(95, 4, ".RK.");
 		}
 		else if (pos == this->castle_input[1]) {
-			this->board.replace(91, 1, ".");
-			this->board.replace(92, 1, ".");
-			this->board.replace(93, 1, "K");
-			this->board.replace(94, 1, "R");
-			this->board.replace(95, 1, ".");
+			this->board.replace(91, 5, "..KR.");
 		}
 		else if (pos == this->castle_input[1]) {
-			this->board.replace(25, 1, ".");
-			this->board.replace(26, 1, "r");
-			this->board.replace(27, 1, "k");
-			this->board.replace(28, 1, ".");
+			this->board.replace(25, 4, ".rk.");
 		}
 		else if (pos == this->castle_input[3]) {
-			this->board.replace(21, 1, ".");
-			this->board.replace(22, 1, ".");
-			this->board.replace(23, 1, "k");
-			this->board.replace(24, 1, "r");
-			this->board.replace(25, 1, ".");
+			this->board.replace(21, 5, "..kr.");
 		}
 	}
 	else {
-		int from = std::stoi(pos.substr(0, 2), nullptr);
-		int to = std::stoi(pos.substr(2, 2), nullptr);
+		int from = std::stoi(pos.substr(0, 2));
+		int to = std::stoi(pos.substr(2, 2));
 		if (this->board.at(from) == 'K') {
 			this->castle[0] = false;
 			this->castle[1] = false;
@@ -275,12 +157,9 @@ Node::print() {
 std::vector<std::string>
 Node::gen_moves() {
 	std::vector<std::string> moves;
-	char pawn = 'P';
-	char knight = 'N';
-	char bishop = 'B';
-	char rook = 'R';
-	char queen = 'Q';
-	char king = 'K';
+	char pawn = 'P'; char knight = 'N';
+	char bishop = 'B'; char rook = 'R';
+	char queen = 'Q'; char king = 'K';
 	if (this->turn.compare("black") == 0) {
 		pawn = tolower(pawn);
 		knight = tolower(knight);
@@ -403,3 +282,9 @@ void Node::flip_dub() {
 	}
 }
 
+void
+Node::flips() {
+	this->flip_turn();
+	this->flip_foe();
+	this->flip_dub();
+}

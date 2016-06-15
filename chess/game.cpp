@@ -6,13 +6,24 @@
 #include <typeinfo>
 
 #include "game.h"
-
-#define in_vector(e,vec) std::find(vec.begin(), vec.end(), e) != vec.end()
-#define in_array(e,arr) std::find(std::begin(arr), std::end(arr), e) != std::end(arr)
+#include "macros.h"
 
 void
 Game::init() {
 	std::cout << "time to play chess cocksucka!" << std::endl;
+}
+
+void
+Game::process_input() {
+	this->moves = this->root.gen_moves();
+	if (in_vector(this->pos, this->moves)) {
+		this->root.update_board(this->pos);
+		this->root.flips();
+		this->root.moves.clear();
+	}
+	else {
+		std::cout << "not a legal move" << std::endl;
+	}
 }
 
 void
@@ -33,7 +44,7 @@ Game::take_input(std::string move) {
 			std::cout << "make yo move sucka: ";
 		}
 	}
-	if (in_array(this->input, castle_input)) {
+	if (in_array(this->input, Node::castle_input)) {
 		this->pos = this->input;
 	}
 	else {
@@ -94,17 +105,3 @@ Game::translate_moves(std::vector<std::string> moves) {
 	return translated_moves;
 }
 
-void 
-Game::process_input() {
-	this->moves = this->root.gen_moves();
-	if (in_vector(this->pos,this->moves)) {
-		this->root.update_board(this->pos);
-		this->root.flip_turn();
-		this->root.flip_foe();
-		this->root.flip_dub();
-		this->root.moves.clear();
-	}
-	else {
-		std::cout << "not a legal move" << std::endl;
-	}
-}

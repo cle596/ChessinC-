@@ -123,10 +123,12 @@
     <ClCompile Include="rook.cpp" />
     <ClCompile Include="queen.cpp" />
     <ClCompile Include="king.cpp" />
+    <ClCompile Include="nodedata.cpp" />
     <ClCompile Include="test.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
+    <ClInclude Include="macros.h" />
     <ClInclude Include="search.h" />
     <ClInclude Include="node.h" />
   </ItemGroup>

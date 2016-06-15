@@ -35,26 +35,28 @@ public:
 	static const std::string castle_input[4];
 	int en_passant;
 
-	static const int P = 100;
-	static const int N = 320;
-	static const int B = 330;
-	static const int R = 500;
-	static const int Q = 900;
-	static const int K = 20000;
+	static const int 
+		P = 100,
+		N = 320,
+		B = 330,
+		R = 500,
+		Q = 900,
+		K = 20000;
 
-	static const int pawn_pst[120];
-	static const int knight_pst[120];
-	static const int bishop_pst[120];
-	static const int rook_pst[120];
-	static const int queen_pst[120];
-	static const int king_pst[120];
+	static const int 
+		pawn_pst[120],
+		knight_pst[120],
+		bishop_pst[120],
+		rook_pst[120],
+		queen_pst[120],
+		king_pst[120];
 
-	static int npawn_pst[120];
-	static int nknight_pst[120];
-	static int nbishop_pst[120];
-	static int nrook_pst[120];
-	static int nqueen_pst[120];
-	static int nking_pst[120];
+	static int npawn_pst[120],
+		nknight_pst[120],
+		nbishop_pst[120],
+		nrook_pst[120],
+		nqueen_pst[120],
+		nking_pst[120];
 
 	char foe[6] = { 'p','n','b','r','q','k' };
 	int dub[8] = { 81,82,83,84,85,86,87,88 };
@@ -79,6 +81,7 @@ public:
 
 	static int* rotate_pst(const int*,int*);
 	int score();
+	void flips();
 	void flip_foe();
 	void flip_turn();
 	void flip_dub();
