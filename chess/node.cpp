@@ -102,6 +102,33 @@ const int Node::king_pst[120] = {
 	0,  0,  0,  0,  0,  0,  0,  0,  0,  0
 };
 
+
+int*
+Node::rotate_pst(const int* pst, int* npst) {
+	for (size_t x = 0; x < 120; ++x) {
+		npst[x] = -pst[10 * (11 - (x / 10)) + (x % 10)];
+	}
+	return npst;
+}
+
+int Node::npawn_pst[120];
+int Node::nknight_pst[120];
+int Node::nbishop_pst[120];
+int Node::nrook_pst[120];
+int Node::nqueen_pst[120];
+int Node::nking_pst[120];
+
+void 
+Node::set_npst() {
+	rotate_pst(pawn_pst, npawn_pst);
+	rotate_pst(knight_pst, nknight_pst);
+	rotate_pst(bishop_pst, nbishop_pst);
+	rotate_pst(rook_pst, nrook_pst);
+	rotate_pst(queen_pst, nqueen_pst);
+	rotate_pst(king_pst, nking_pst);
+}
+
+
 const int Node::Nmoves[] = {
 	2 * up + rt,up + 2 * rt,dn + 2 * rt,2 * dn + rt,
 	2 * dn + lt,dn + 2 * lt,up + 2 * lt,2 * up + lt
@@ -125,41 +152,28 @@ void Node::castle_reset() {
 	}
 }
 
+void Node::castle_copy(const bool* b,bool* bb) {
+	for (size_t x = 0; x < 4; ++x) {
+		bb[x] = b[x];
+	}
+}
+
+const std::string Node::castle_input[4] = { "wk00" ,"wq00","bk00","bq00" };
+
 Node::Node()
 {
 	this->turn = "white";
 	this->en_passant = 0;
 	this->castle_reset();
-	this->castle_input[0] = "wk00";
-	this->castle_input[1] = "wq00";
-	this->castle_input[2] = "bk00";
-	this->castle_input[3] = "bq00";
-	this->rotate_pst(this->pawn_pst, this->npawn_pst);
-	this->rotate_pst(this->knight_pst, this->nknight_pst);
-	this->rotate_pst(this->bishop_pst, this->nbishop_pst);
-	this->rotate_pst(this->rook_pst, this->nrook_pst);
-	this->rotate_pst(this->queen_pst, this->nqueen_pst);
-	this->rotate_pst(this->king_pst, this->nking_pst);
+	set_npst();
 }
 
 Node::Node(const Node & n)
 {
 	this->board = n.board;
 	this->en_passant = n.en_passant;
-	this->castle[0] = n.castle[0];
-	this->castle[1] = n.castle[1];
-	this->castle[2] = n.castle[2];
-	this->castle[3] = n.castle[3];
-	this->castle_input[0] = "wk00";
-	this->castle_input[1] = "wq00";
-	this->castle_input[2] = "bk00";
-	this->castle_input[3] = "bq00";
-	this->rotate_pst(this->pawn_pst, this->npawn_pst);
-	this->rotate_pst(this->knight_pst, this->nknight_pst);
-	this->rotate_pst(this->bishop_pst, this->nbishop_pst);
-	this->rotate_pst(this->rook_pst, this->nrook_pst);
-	this->rotate_pst(this->queen_pst, this->nqueen_pst);
-	this->rotate_pst(this->king_pst, this->nking_pst);
+	castle_copy(n.castle,this->castle);
+	set_npst();
 }
 
 void
@@ -244,14 +258,6 @@ Node::update_board(std::string pos) {
 		);
 		this->board.replace(from, 1, ".");
 	}
-}
-
-int*
-Node::rotate_pst(const int* pst,int* npst) {
-	for (size_t x = 0; x < 120; ++x) {
-		npst[x] = -pst[10*(11-(x/10))+(x%10)];
-	}
-	return npst;
 }
 
 void

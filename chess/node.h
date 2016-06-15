@@ -32,7 +32,7 @@ public:
 		"         \n";
 	std::string turn;
 	bool castle[4]; //wk,wq,bk,bq
-	std::string castle_input[4];
+	static const std::string castle_input[4];
 	int en_passant;
 
 	static const int P = 100;
@@ -49,12 +49,12 @@ public:
 	static const int queen_pst[120];
 	static const int king_pst[120];
 
-	int npawn_pst[120];
-	int nknight_pst[120];
-	int nbishop_pst[120];
-	int nrook_pst[120];
-	int nqueen_pst[120];
-	int nking_pst[120];
+	static int npawn_pst[120];
+	static int nknight_pst[120];
+	static int nbishop_pst[120];
+	static int nrook_pst[120];
+	static int nqueen_pst[120];
+	static int nking_pst[120];
 
 	char foe[6] = { 'p','n','b','r','q','k' };
 	int dub[8] = { 81,82,83,84,85,86,87,88 };
@@ -77,12 +77,14 @@ public:
 	void king(int);
 	std::vector<std::string> gen_moves();
 
-	int* rotate_pst(const int*,int*);
+	static int* rotate_pst(const int*,int*);
 	int score();
 	void flip_foe();
 	void flip_turn();
 	void flip_dub();
 
 	void castle_reset();
+	static void castle_copy(const bool*,bool*);
+	static void set_npst();
 };
 

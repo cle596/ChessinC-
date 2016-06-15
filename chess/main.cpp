@@ -18,7 +18,6 @@ int main() {
 	Search s = Search();
 
 	while (true) {
-		std::cout << g.root.castle[0] << g.root.castle[1] << g.root.castle[2] << g.root.castle[3] << std::endl;
 		g.root.print();
 		if (g.root.turn.compare("white")==0) {
 			g.take_input("");
