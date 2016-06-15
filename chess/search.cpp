@@ -6,34 +6,26 @@
 int
 Search::recurse(Node& n,int d,int max,int min)
 {
-	//std::cout << n.turn << std::endl;
-	//std::cout << "recurse called" << std::endl;
 	int score;
-	std::vector<Node> nodes;
-	std::vector<std::string> moves = n.gen_moves();
-	//std::cout << "moves gend: " << moves.size() << std::endl;
+	n.gen_moves();
 	if (d > 0) {
-		//std::cout << moves.size() << std::endl;
-		for (size_t x = 0; x < moves.size(); ++x) {
-			//std::cout << moves.at(x) << std::endl;
+		for (size_t x = 0; x < n.moves.size(); ++x) {
 			Node nn = Node(n);
-			nn.update_board(moves.at(x));
-			//std::cout << "move: " << x << std::endl;
+			nn.flip_turn();
+			nn.flip_foe();
+			nn.update_board(n.moves.at(x));
 			//nn.print();
-			//nodes.push_back(nn);
-			//nodes.back().print();
+			//std::cout << nn.score() << std::endl;
 			score = this->recurse(nn, d - 1, max, min);
-			if (score<max ||
+			if (score<max || //not equal seems better
 				score>min) {
-				//std::cout << "break score: " << score << std::endl;
 				break;
 			}
 			else if (score > max &&
 				n.turn.compare("white")==0) {
 				max = score;
-				//to be removed
-				if (d == 2) {
-					this->bmove.assign(moves.at(x));
+				if (d == 3) {
+					this->bmove.assign(n.moves.at(x));
 				}
 			}
 			else if (score < min &&
@@ -44,14 +36,11 @@ Search::recurse(Node& n,int d,int max,int min)
 		if (n.turn.compare("white")==0) {
 			return max;
 		}
-		//else if(nodes.back().turn.compare("black")){
 		else{
 			return min;
 		}
 	}
 	else if (d == 0) {
-	//else{	
-		//std::cout << "node visited" << std::endl;
 		return n.score(); 
 	}
 }

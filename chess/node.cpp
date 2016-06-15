@@ -34,12 +34,14 @@ Node::Node()
 Node::Node(const Node & n)
 {
 	this->board = n.board;
+	/*
 	if (n.turn.compare("white") == 0) {
 		this->turn = "black";
 	}
 	else {
 		this->turn = "white";
 	}
+	*/
 	this->en_passant = n.en_passant;
 	this->castle[0] = n.castle[0];
 	this->castle[1] = n.castle[1];
@@ -414,4 +416,26 @@ Node::score() {
 		}
 	}
 	return score;
+}
+
+void Node::flip_foe() {
+	if (this->turn.compare("white") == 0) {
+		for (int x = 0; x < 6; ++x) {
+			this->foe[x] = toupper(this->foe[x]);
+		}
+	}
+	else {
+		for (int x = 0; x < 6; ++x) {
+			this->foe[x] = tolower(this->foe[x]);
+		}
+	}
+}
+
+void Node::flip_turn() {
+	if (this->turn.compare("white") == 0) {
+		this->turn = "black";
+	}
+	else {
+		this->turn = "white";
+	}
 }

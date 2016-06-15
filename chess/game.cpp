@@ -99,18 +99,7 @@ Game::process_input() {
 	this->moves = this->root.gen_moves();
 	if (in_vector(this->pos,this->moves)) {
 		this->root.update_board(this->pos);
-		if (this->root.turn.compare("white") == 0) {
-			this->root.turn = "black";
-			for (int x = 0; x < 6; ++x) {
-				this->root.foe[x] = toupper(this->root.foe[x]);
-			}
-		}
-		else {
-			this->root.turn = "white";
-			for (int x = 0; x < 6; ++x) {
-				this->root.foe[x] = tolower(this->root.foe[x]);
-			}
-		}
+		this->root.flip_foe();
 		this->root.moves.clear();
 	}
 	else {

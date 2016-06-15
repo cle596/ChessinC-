@@ -25,7 +25,7 @@ public:
 	std::string castle_input[4];
 	int en_passant;
 
-	int nscore;
+	//int nscore;
 
 	const int P = 100;
 	const int N = 320;
@@ -145,5 +145,7 @@ public:
 
 	int* rotate_pst(const int*,int*);
 	int score();
+	void flip_foe();
+	void flip_turn();
 
 };
