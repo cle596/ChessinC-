@@ -126,6 +126,9 @@ public:
 	int nking_pst[120];
 
 	char foe[6] = { 'p','n','b','r','q','k' };
+	int dub[8] = { 81,82,83,84,85,86,87,88 };
+	int bdub[8] = {31,32,33,34,35,36,37,38};
+	int wdub[8] = { 81,82,83,84,85,86,87,88 };
 
 	std::vector<std::string> moves;
 
@@ -147,5 +150,6 @@ public:
 	int score();
 	void flip_foe();
 	void flip_turn();
+	void flip_dub();
 
 };

@@ -13,6 +13,7 @@ Search::recurse(Node& n,int d,int max,int min)
 			Node nn = Node(n);
 			nn.flip_turn();
 			nn.flip_foe();
+			nn.flip_dub();
 			nn.update_board(n.moves.at(x));
 			//nn.print();
 			//std::cout << nn.score() << std::endl;
@@ -24,13 +25,13 @@ Search::recurse(Node& n,int d,int max,int min)
 			else if (score > max &&
 				n.turn.compare("white")==0) {
 				max = score;
-				if (d == 3) {
-					this->bmove.assign(n.moves.at(x));
-				}
 			}
 			else if (score < min &&
 				n.turn.compare("black")==0) {
 				min = score;
+				if (d == 2) {
+					this->bmove.assign(n.moves.at(x));
+				}
 			}
 		}
 		if (n.turn.compare("white")==0) {

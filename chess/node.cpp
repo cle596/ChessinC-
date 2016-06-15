@@ -34,14 +34,6 @@ Node::Node()
 Node::Node(const Node & n)
 {
 	this->board = n.board;
-	/*
-	if (n.turn.compare("white") == 0) {
-		this->turn = "black";
-	}
-	else {
-		this->turn = "white";
-	}
-	*/
 	this->en_passant = n.en_passant;
 	this->castle[0] = n.castle[0];
 	this->castle[1] = n.castle[1];
@@ -176,7 +168,8 @@ Node::pawn(int x) {
 		this->moves.push_back(
 			add_int_strings(x, x + di)
 		);
-		if (this->board.at(x + 2 * di) == '.') {
+		if (in_array(x,this->dub) &&
+			this->board.at(x + 2 * di) == '.') {
 			this->moves.push_back(
 				add_int_strings(x, x + 2 * di)
 			);
@@ -421,12 +414,12 @@ Node::score() {
 void Node::flip_foe() {
 	if (this->turn.compare("white") == 0) {
 		for (int x = 0; x < 6; ++x) {
-			this->foe[x] = toupper(this->foe[x]);
+			this->foe[x] = tolower(this->foe[x]);
 		}
 	}
 	else {
 		for (int x = 0; x < 6; ++x) {
-			this->foe[x] = tolower(this->foe[x]);
+			this->foe[x] = toupper(this->foe[x]);
 		}
 	}
 }
@@ -437,5 +430,18 @@ void Node::flip_turn() {
 	}
 	else {
 		this->turn = "white";
+	}
+}
+
+void Node::flip_dub() {
+	if (this->turn.compare("white") == 0) {
+		for (int x = 0; x < 8; ++x) {
+			this->dub[x] = wdub[x];
+		}
+	}
+	else {
+		for (int x = 0; x < 8; ++x) {
+			this->dub[x] = bdub[x];
+		}
 	}
 }

@@ -99,7 +99,9 @@ Game::process_input() {
 	this->moves = this->root.gen_moves();
 	if (in_vector(this->pos,this->moves)) {
 		this->root.update_board(this->pos);
+		this->root.flip_turn();
 		this->root.flip_foe();
+		this->root.flip_dub();
 		this->root.moves.clear();
 	}
 	else {

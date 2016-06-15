@@ -16,15 +16,21 @@ int main() {
 	g.init();
 
 	Search s = Search();
-	s.tcurse(g.root, 3);
-	std::cout << s.bmove << std::endl;
 
 	while (true) {		
-		std::cout << "score: " << g.root.score() << std::endl;
-		std::cout << "en_passant: " << g.root.en_passant << std::endl;
+		std::cout << g.root.foe[0] << std::endl;
+		std::cout << g.root.dub[0] << std::endl;
 		g.root.print();
-		g.take_input("");
-		g.process_input();
+		if (g.root.turn.compare("white")==0) {
+			g.take_input("");
+			g.process_input();
+		}
+		else {
+			s.tcurse(g.root, 2);
+			std::cout << s.bmove << std::endl;
+			g.take_input("");
+			g.process_input();
+		}
 	}
 
  	return 0;
