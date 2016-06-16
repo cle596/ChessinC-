@@ -16,11 +16,11 @@ Game::init() {
 
 void
 Game::process_input() {
-	this->moves = this->root.gen_moves();
-	if (in_vector(this->pos, this->moves)) {
-		this->root.update_board(this->pos);
-		this->root.flips();
-		this->root.moves.clear();
+	moves = root.gen_moves();
+	if (in_vector(pos, moves)) {
+		root.update_board(pos);
+		root.flips();
+		root.moves.clear();
 	}
 	else {
 		std::cout << "not a legal move" << std::endl;
@@ -32,12 +32,12 @@ Game::take_input(std::string move) {
 	std::cout << "make yo move sucka: ";
 	while (true) {
 		if (move.compare("") == 0) {
-			std::cin >> this->input;
+			std::cin >> input;
 		}
 		else {
-			this->input = move;
+			input = move;
 		}
-		if (this->input.length() == 4) {
+		if (input.length() == 4) {
 			break;
 		}
 		else {
@@ -45,11 +45,11 @@ Game::take_input(std::string move) {
 			std::cout << "make yo move sucka: ";
 		}
 	}
-	if (in_array(this->input, Node::castle_input)) {
-		this->pos = this->input;
+	if (in_array(input, Node::castle_input)) {
+		pos = input;
 	}
 	else {
-		this->pos = move_to_pos(this->input);
+		pos = move_to_pos(input);
 	}
 }
 
@@ -100,7 +100,7 @@ Game::translate_moves(std::vector<std::string> moves) {
 	std::vector<std::string> translated_moves;
 	for (size_t x = 0; x < moves.size(); ++x) {
 		translated_moves.push_back(
-			this->pos_to_move(moves.at(x))
+			pos_to_move(moves.at(x))
 		);
 	}
 	return translated_moves;
