@@ -14,8 +14,8 @@ Search::recurse(Node& n,int d,int max,int min)
 			nn.update_board(n.moves.at(x));
 			nn.flips();
 			score = this->recurse(nn, d - 1, max, min);
-			if (score<=max || //not equal seems better
-				score>=min) {
+			if (score<max || //not equal seems better
+				score>min) {
 				break;
 			}
 			else if (score > max &&

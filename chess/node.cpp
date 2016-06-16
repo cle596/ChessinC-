@@ -9,7 +9,7 @@
 #include "macros.h"
 
 int*
-Node::rotate_pst(const int* pst, int* npst) {
+Node::rotate_pst(const int* pst,int* npst) {
 	for (size_t x = 0; x < 120; ++x) {
 		npst[x] = -pst[10 * (11 - (x / 10)) + (x % 10)];
 	}
@@ -18,14 +18,13 @@ Node::rotate_pst(const int* pst, int* npst) {
 
 void 
 Node::set_npst() {
-	rotate_pst(pawn_pst, npawn_pst);
-	rotate_pst(knight_pst, nknight_pst);
-	rotate_pst(bishop_pst, nbishop_pst);
-	rotate_pst(rook_pst, nrook_pst);
-	rotate_pst(queen_pst, nqueen_pst);
-	rotate_pst(king_pst, nking_pst);
+	Node::rotate_pst(Node::pawn_pst, Node::npawn_pst);
+	Node::rotate_pst(Node::knight_pst, Node::nknight_pst);
+	Node::rotate_pst(Node::bishop_pst, Node::nbishop_pst);
+	Node::rotate_pst(Node::rook_pst, Node::nrook_pst);
+	Node::rotate_pst(Node::queen_pst, Node::nqueen_pst);
+	Node::rotate_pst(Node::king_pst, Node::nking_pst);
 }
-
 
 const int Node::Nmoves[] = {
 	2 * up + rt,up + 2 * rt,dn + 2 * rt,2 * dn + rt,
@@ -58,10 +57,10 @@ void Node::castle_copy(const bool* b,bool* bb) {
 
 Node::Node()
 {
-	this->turn = "white";
-	this->en_passant = 0;
-	this->castle_reset();
-	set_npst();
+	turn = "white";
+	en_passant = 0;
+	castle_reset();
+	//set_npst();
 }
 
 Node::Node(const Node & n)
@@ -69,7 +68,7 @@ Node::Node(const Node & n)
 	this->board = n.board;
 	this->en_passant = n.en_passant;
 	castle_copy(n.castle,this->castle);
-	set_npst();
+	//set_npst();
 }
 
 void

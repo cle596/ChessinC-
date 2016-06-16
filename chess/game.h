@@ -10,20 +10,31 @@ class Game {
 
 public:
 
-	std::string input;
-	std::string pos;
-	std::vector<std::string> moves;
-	std::vector<std::string> tmoves;
-	//std::string castle_input[4];
-
+	//node maintained for the game
 	Node root = Node();
 
-	void init();
-	void take_input(std::string);
+	//input strings
+	std::string input;
+	std::string pos;
+
+	//for debugging purposes
+	std::vector<std::string> moves;
+	std::vector<std::string> tmoves;
+
+	void init(); // start msg
+
+	void take_input(std::string); //check string length of input and if its a castle move
+
+	//convert between number index and alphabetic move string
 	std::string move_to_pos(std::string move);
 	std::string pos_to_move(std::string pos);
+
+	//translate alphabetic move to index position string
 	std::vector<std::string> translate_moves(std::vector<std::string>);
-	void process_input();
+
+	//check if input move is legal by generating possible move vector 
+	//and update the game's node 
+	void process_input(); 
 
 };
 

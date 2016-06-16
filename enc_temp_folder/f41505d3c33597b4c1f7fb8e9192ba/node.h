@@ -48,12 +48,12 @@ public:
 		queen_pst[120],
 		king_pst[120];
 
-	static int npawn_pst[120],
-		nknight_pst[120],
-		nbishop_pst[120],
-		nrook_pst[120],
-		nqueen_pst[120],
-		nking_pst[120];
+	static int *npawn_pst,
+		*nknight_pst,
+		*nbishop_pst,
+		*nrook_pst,
+		*nqueen_pst,
+		*nking_pst;
 
 	char foe[6] = { 'p','n','b','r','q','k' };
 	int dub[8] = { 81,82,83,84,85,86,87,88 },
@@ -93,7 +93,6 @@ public:
 	//castle related functions for copy constructor
 	void castle_reset();
 	static void castle_copy(const bool*,bool*);
-	
 	static void set_npst();
 };
 

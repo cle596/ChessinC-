@@ -11,6 +11,7 @@
 void
 Game::init() {
 	std::cout << "time\nto play\nchess!" << std::endl;
+	Node::set_npst();
 }
 
 void

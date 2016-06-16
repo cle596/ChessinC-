@@ -91,11 +91,12 @@ const int Node::king_pst[120] = {
 	0,  0,  0,  0,  0,  0,  0,  0,  0,  0
 };
 
-int Node::npawn_pst[120];
-int Node::nknight_pst[120];
-int Node::nbishop_pst[120];
-int Node::nrook_pst[120];
-int Node::nqueen_pst[120];
-int Node::nking_pst[120];
+int 
+	Node::npawn_pst[120],
+	Node::nknight_pst[120],
+	Node::nbishop_pst[120],
+	Node::nrook_pst[120],
+	Node::nqueen_pst[120],
+	Node::nking_pst[120];
 
 const std::string Node::castle_input[4] = { "wk00" ,"wq00","bk00","bq00" };
