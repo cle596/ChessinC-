@@ -86,23 +86,22 @@ Game::pos_to_move(std::string pos) {
 	for (int x = 0; x < 8; ++x) {
 		rows[9 - x] = 49 + x;
 	}
-	int posi1 = std::stoi(pos.substr(0, 2), nullptr);
-	int posi2 = std::stoi(pos.substr(2, 2), nullptr);
-	move += cols.at(posi1 - (posi1 / 10) * 10);
-	move += rows.at(posi1 / 10);
-	move += cols.at(posi2 - (posi2 / 10) * 10);
-	move += rows.at(posi2 / 10);
+	int p1 = std::stoi(pos.substr(0, 2), nullptr);
+	int p2 = std::stoi(pos.substr(2, 2), nullptr);
+	move += cols.at(p1 - (p1 / 10) * 10);
+	move += rows.at(p1 / 10);
+	move += cols.at(p2 - (p2 / 10) * 10);
+	move += rows.at(p2 / 10);
 	return move;
 }
 
 std::vector<std::string>
 Game::translate_moves(std::vector<std::string> moves) {
-	std::vector<std::string> translated_moves;
 	for (size_t x = 0; x < moves.size(); ++x) {
-		translated_moves.push_back(
+		tmoves.push_back(
 			pos_to_move(moves.at(x))
 		);
 	}
-	return translated_moves;
+	return tmoves;
 }
 

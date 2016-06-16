@@ -153,34 +153,34 @@ Node::print() {
 
 std::vector<std::string>
 Node::gen_moves() {
-	char p = 'P'; char n = 'N';
-	char b = 'B'; char r = 'R';
-	char q = 'Q'; char k = 'K';
+	char pa = 'P'; char na = 'N';
+	char ba = 'B'; char ra = 'R';
+	char qa = 'Q'; char ka = 'K';
 	if (turn.compare("black") == 0) {
-		p = tolower(p);
-		k = tolower(k);
-		b = tolower(b);
-		r = tolower(r);
-		q = tolower(q);
-		k = tolower(k);
+		pa = tolower(pa);
+		na = tolower(na);
+		ba = tolower(ba);
+		ra = tolower(ra);
+		qa = tolower(qa);
+		ka = tolower(ka);
 	}
 	for (size_t x = 0; x < board.length(); ++x) {
-		if (board.at(x)==p) {
+		if (board.at(x)==pa) {
 			pawn(x);
 		}
-		else if (board.at(x)==k) {
+		else if (board.at(x)==na) {
 			knight(x);
 		}
-		else if (board.at(x)==b) {
+		else if (board.at(x)==ba) {
 			bishop(x);
 		}
-		else if (board.at(x)==r) {
+		else if (board.at(x)==ra) {
 			rook(x);
 		}
-		else if (board.at(x)==q) {
+		else if (board.at(x)==qa) {
 			queen(x);
 		}
-		else if (board.at(x)==k) {
+		else if (board.at(x)==ka) {
 			king(x);
 		}
 	}

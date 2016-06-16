@@ -20,14 +20,12 @@ int main() {
 
 	while (true) {
 		g.root.print();
-		std::cout << g.root.score() << std::endl;
 		if (g.root.turn.compare("white")==0) {
 			g.take_input("");
 			g.process_input();
 		}
 		else {
 			s.tcurse(g.root);
-			std::cout << s.bmove << std::endl;
 			g.take_input("");
 			g.process_input();
 		}

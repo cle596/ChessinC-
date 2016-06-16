@@ -21,6 +21,8 @@ public:
 		"         \n"
 		"         \n";
 
+	int nscore;
+
 	std::string turn;
 	bool castle[4]; //wk,wq,bk,bq
 	static const std::string castle_input[4];
