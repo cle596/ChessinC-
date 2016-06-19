@@ -27,7 +27,9 @@ int main() {
 		else {
 			s.tcurse(g.root);
 			g.take_input("");
-			g.process_input();
+			while (!g.process_input()) {
+				g.take_input("");
+			}
 		}
 	}
 

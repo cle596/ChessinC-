@@ -14,22 +14,24 @@ Game::init() {
 	Node::set_npst();
 }
 
-void
+bool
 Game::process_input() {
 	moves = root.gen_moves();
 	if (in_vector(pos, moves)) {
 		root.update_board(pos);
 		root.flips();
 		root.moves.clear();
+		return true;
 	}
 	else {
 		std::cout << "not a legal move" << std::endl;
+		return false;
 	}
 }
 
 void
 Game::take_input(std::string move) {
-	std::cout << "make yo move sucka: ";
+	std::cout << "make your move: ";
 	while (true) {
 		if (move.compare("") == 0) {
 			std::cin >> input;
@@ -42,7 +44,7 @@ Game::take_input(std::string move) {
 		}
 		else {
 			std::cout << "not a legal move" << std::endl;
-			std::cout << "make yo move sucka: ";
+			std::cout << "make your move: ";
 		}
 	}
 	if (in_array(input, Node::castle_input)) {

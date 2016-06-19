@@ -27,14 +27,14 @@ public:
 
 	//convert between number index and alphabetic move string
 	std::string move_to_pos(std::string move);
-	std::string pos_to_move(std::string pos);
+	static std::string pos_to_move(std::string pos);
 
 	//translate alphabetic move to index position string
 	std::vector<std::string> translate_moves(std::vector<std::string>);
 
 	//check if input move is legal by generating possible move vector 
 	//and update the game's node 
-	void process_input(); 
+	bool process_input(); 
 
 };
 
