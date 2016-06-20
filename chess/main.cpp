@@ -17,6 +17,7 @@ int main() {
 
 	Search s = Search();
 	s.depth = 3;
+	s.gen_keymap();
 
 	while (true) {
 		g.root.print();

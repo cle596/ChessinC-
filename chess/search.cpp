@@ -1,5 +1,7 @@
 #include <ctime>
 #include <algorithm>
+#include <map>
+#include <bitset>
 
 #include "search.h"
 #include "node.h"
@@ -35,7 +37,7 @@ Search::recurse(Node& n,int d,int max,int min)
 				}
 			}
 		}
-		if (n.turn.compare("white")==0) {
+		if (n.turn == "white") {
 			return max;
 		}
 		else{
@@ -57,10 +59,10 @@ int Search::guess(Node& n,int g) {
 	while (lower < upper) {
 		b = std::max(g, lower + 1);
 		g = recurse(n, depth, b - 1, b);
-		std::cout << "guess: " << g
+		/*std::cout << "guess: " << g
 			<< " upper: " << upper
 			<< " lower: " << lower
-			<< std::endl;
+			<< std::endl;*/
 		if (g < b) {
 			upper = g;
 		}
@@ -74,25 +76,30 @@ int Search::guess(Node& n,int g) {
 void 
 Search::tcurse(Node& n) {
 	int max = depth;
-	std::cout << "max: " << max << std::endl;
 	depth = 1;
 	int inf = 100000;
 	int g = 0;
+	history.clear();
 	while (depth <= max) {
-		//std::cout << depth << std::endl;
-		//std::cout << guess(n) << std::endl;
-		//g = guess(n,g);
-		//std::cout << g << std::endl;
 		clock_t t = clock();
+		std::cout << "depth: " << depth << std::endl;
 		std::cout << "ab score: " << recurse(n, depth, -inf, inf) << std::endl;
-		std::cout << "time: " << (clock() - t) / 1000.0 << std::endl;
+		//g = guess(n,g);
+		//std::cout << "guess: " << g << std::endl;
 		std::cout << "best move: " << Game::pos_to_move(bmove) << std::endl;
+		std::cout << "history: " << std::endl;
+		for (size_t x = 0; x < history.size(); ++x) {
+			std::cout << Game::pos_to_move(history.at(x)) << std::endl;
+		}
+		std::cout << "time: " << (clock() - t) / 1000.0 << std::endl << std::endl;
+		/*
 		if (int(history.size()) >= depth) {
 			history.at(depth-1) = bmove;
 		}
 		else {
 			history.push_back(bmove);
 		}
+		*/
 		depth += 1;
 	}
 	if (depth > max) {
@@ -109,4 +116,26 @@ Search::sort(std::vector<std::string>& moves,std::string move) {
 			return;
 		}
 	}
+}
+
+void 
+Search::gen_keymap() {
+	int z = 0;
+	for (int x = 0; x < 120; ++x) {
+		P_keymap[x] = z;
+		N_keymap[x] = z + 120;
+		B_keymap[x] = z + 120*2;
+		R_keymap[x] = z + 120 * 3;
+		Q_keymap[x] = z + 120 * 4;
+		K_keymap[x] = z + 120 * 5;
+		p_keymap[x] = z + 120 * 6;
+		n_keymap[x] = z + 120 * 7;
+		b_keymap[x] = z + 120 * 8;
+		r_keymap[x] = z + 120 * 9;
+		q_keymap[x] = z + 120 * 10;
+		k_keymap[x] = z + 120 * 11;
+		z += 1;
+	}
+	std::cout << k_keymap[119] << std::endl;
+	std::cout << std::bitset< 16 >(k_keymap[119]) << std::endl;
 }
