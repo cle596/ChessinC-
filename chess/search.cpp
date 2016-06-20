@@ -46,6 +46,7 @@ Search::recurse(Node& n,int d,int max,int min)
 	}
 	else /*if (d == 0)*/ {
 		n.nscore = n.score();
+		db[hash(n)] = n;
 		return n.nscore; 
 	}
 }
@@ -136,6 +137,49 @@ Search::gen_keymap() {
 		k_keymap[x] = z + 120 * 11;
 		z += 1;
 	}
-	std::cout << k_keymap[119] << std::endl;
-	std::cout << std::bitset< 16 >(k_keymap[119]) << std::endl;
+	//std::cout << std::bitset< 16 >(k_keymap[119]).to_string << std::endl;
+}
+
+std::string
+Search::hash(Node& n) {
+	int hash = 0;
+	for (size_t x = 0; x < n.board.length(); ++x) {
+		if (n.board.at(x) == 'P') {
+			hash |= P_keymap[x];
+		}
+		else if (n.board.at(x) == 'p') {
+			hash |= p_keymap[x];
+		}
+		else if (n.board.at(x) == 'N') {
+			hash |= N_keymap[x];
+		}
+		else if (n.board.at(x) == 'n') {
+			hash |= n_keymap[x];
+		}
+		else if (n.board.at(x) == 'B') {
+			hash |= B_keymap[x];
+		}
+		else if (n.board.at(x) == 'b') {
+			hash |= b_keymap[x];
+		}
+		else if (n.board.at(x) == 'R') {
+			hash |= R_keymap[x];
+		}
+		else if (n.board.at(x) == 'r') {
+			hash |= r_keymap[x];
+		}
+		else if (n.board.at(x) == 'Q') {
+			hash |= Q_keymap[x];
+		}
+		else if (n.board.at(x) == 'q') {
+			hash |= q_keymap[x];
+		}
+		else if (n.board.at(x) == 'K') {
+			hash |= K_keymap[x];
+		}
+		else if (n.board.at(x) == 'k') {
+			hash |= k_keymap[x];
+		}
+	}
+	return std::bitset<16>(hash).to_string();
 }

@@ -16,8 +16,9 @@ int main() {
 	g.init();
 
 	Search s = Search();
-	s.depth = 3;
+	s.depth = 4;
 	s.gen_keymap();
+	std::cout << s.hash(g.root) << std::endl;
 
 	while (true) {
 		g.root.print();
