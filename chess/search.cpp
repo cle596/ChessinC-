@@ -9,6 +9,12 @@
 int
 Search::recurse(Node& n,int d,int max,int min)
 {
+	if (db.find(hash(n)) != db.end()) {
+		if (n.a >= min) return n.a;
+		if (n.b <= max) return n.b;
+		max = std::max(max,n.a);
+		min = std::min(min,n.b);
+	}
 	n.gen_moves();
 	if (int(history.size()) > depth - d) {
 		sort(n.moves, history.at(depth - d));

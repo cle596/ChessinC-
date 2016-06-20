@@ -7,6 +7,8 @@ class Node {
 
 public:
 
+	int a, b;
+
 	std::string board =
 		"         \n"
 		"         \n"
