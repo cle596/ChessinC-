@@ -39,19 +39,28 @@ Search::ab(Node& n,int alpha,int beta,int d)
 				nn.update_board(n.moves.at(x));
 				nn.flips();
 				g = std::min(g, ab(nn, alpha, b, d - 1));
-				b = std::min(b, g);
+				if (d == depth &&
+					g < b) {
+					bmove = n.moves.at(x);
+				}
+				else {
+					b = std::min(b, g);
+				}
 			}
 		}
 	}
 	if (g <= alpha) {
 		n.b = g;
+		db[hash(n)] = n;
 	}
 	if (g > alpha && g < beta) {
 		n.a = g;
 		n.b = g;
+		db[hash(n)] = n;
 	}
 	if (g >= beta) {
 		n.a = g;
+		db[hash(n)] = n;
 	}
 	return g;
 }
