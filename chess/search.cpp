@@ -7,6 +7,56 @@
 #include "node.h"
 
 int
+Search::ab(Node& n,int alpha,int beta,int d)
+{
+	int g, a, b;
+	if (db.find(hash(n)) != db.end()) {
+		if (n.a >= beta) return n.a;
+		if (n.b <= alpha) return n.b;
+		alpha = std::max(alpha, n.a);
+		beta = std::min(beta, n.b);
+	}
+	if (d == 0) {
+		g = n.score();
+	}
+	else if (n.turn == "white") {
+		g = -inf; a = alpha;
+		for (size_t x = 0; x < n.moves.size(); ++x) {
+			while (g < beta) {
+				Node nn = Node(n);
+				nn.update_board(n.moves.at(x));
+				nn.flips();
+				g = std::max(g, ab(nn, a, beta, d - 1));
+				a = std::max(a, g);
+			}
+		}
+	}
+	else {
+		g = inf; b = beta;
+		for (size_t x = 0; x < n.moves.size(); ++x) {
+			while (g > alpha) {
+				Node nn = Node(n);
+				nn.update_board(n.moves.at(x));
+				nn.flips();
+				g = std::min(g, ab(nn, alpha, b, d - 1));
+				b = std::min(b, g);
+			}
+		}
+	}
+	if (g <= alpha) {
+		n.b = g;
+	}
+	if (g > alpha && g < beta) {
+		n.a = g;
+		n.b = g;
+	}
+	if (g >= beta) {
+		n.a = g;
+	}
+	return g;
+}
+
+int
 Search::recurse(Node& n,int d,int max,int min)
 {
 	if (db.find(hash(n)) != db.end()) {
@@ -55,6 +105,7 @@ Search::recurse(Node& n,int d,int max,int min)
 		db[hash(n)] = n;
 		return n.nscore; 
 	}
+	//if ()
 }
 
 int Search::guess(Node& n,int g) {

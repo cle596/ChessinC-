@@ -14,6 +14,7 @@ public:
 	std::map<std::string,Node> db;
 	std::vector<std::string> history;
 	int depth;
+	static const int inf = 100000;
 	std::map<int, int>
 		P_keymap, p_keymap,
 		N_keymap, n_keymap,
@@ -28,4 +29,5 @@ public:
 	void sort(std::vector<std::string>& moves, std::string move);
 	void gen_keymap();
 	std::string hash(Node&);
+	int ab(Node&, int, int, int)
 };
