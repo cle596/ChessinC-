@@ -51,6 +51,9 @@
     <ClCompile Include="nodedata.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="value.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="node.h">
@@ -63,6 +66,9 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="macros.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="value.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

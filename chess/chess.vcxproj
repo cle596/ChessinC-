@@ -126,12 +126,14 @@
     <ClCompile Include="king.cpp" />
     <ClCompile Include="nodedata.cpp" />
     <ClCompile Include="test.cpp" />
+    <ClCompile Include="value.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
     <ClInclude Include="macros.h" />
     <ClInclude Include="search.h" />
     <ClInclude Include="node.h" />
+    <ClInclude Include="value.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

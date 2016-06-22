@@ -6,12 +6,13 @@
 
 #include "node.h"
 #include "game.h"
+#include "value.h"
 
 class Search {
 public:
 
 	std::string bmove;
-	std::map<std::string,Node> db;
+	std::map<std::string,Value> db;
 	std::vector<std::string> history;
 	int depth;
 	static const int inf = 100000;
@@ -29,5 +30,5 @@ public:
 	void sort(std::vector<std::string>& moves, std::string move);
 	void gen_keymap();
 	std::string hash(Node&);
-	int ab(Node&, int, int, int)
+	int ab(Node&, int, int, int);
 };

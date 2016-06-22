@@ -5,16 +5,18 @@
 
 #include "search.h"
 #include "node.h"
+#include "value.h"
 
 int
 Search::ab(Node& n,int alpha,int beta,int d)
 {
 	int g, a, b;
 	if (db.find(hash(n)) != db.end()) {
-		if (n.a >= beta) return n.a;
-		if (n.b <= alpha) return n.b;
-		alpha = std::max(alpha, n.a);
-		beta = std::min(beta, n.b);
+		Value v = db[hash(n)];
+		if (v.a >= beta) return v.a;
+		if (v.b <= alpha) return v.b;
+		alpha = std::max(alpha, v.a);
+		beta = std::min(beta, v.b);
 	}
 	if (d == 0) {
 		g = n.score();
@@ -51,16 +53,16 @@ Search::ab(Node& n,int alpha,int beta,int d)
 	}
 	if (g <= alpha) {
 		n.b = g;
-		db[hash(n)] = n;
+		db[hash(n)] = Value(-100000,n.b);
 	}
 	if (g > alpha && g < beta) {
 		n.a = g;
 		n.b = g;
-		db[hash(n)] = n;
+		db[hash(n)] = Value(n.a,n.b);
 	}
 	if (g >= beta) {
 		n.a = g;
-		db[hash(n)] = n;
+		db[hash(n)] = Value(n.a,100000);
 	}
 	return g;
 }
@@ -111,7 +113,7 @@ Search::recurse(Node& n,int d,int max,int min)
 	}
 	else /*if (d == 0)*/ {
 		n.nscore = n.score();
-		db[hash(n)] = n;
+		//db[hash(n)] = n;
 		return n.nscore; 
 	}
 	//if ()
