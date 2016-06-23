@@ -16,12 +16,12 @@ int main() {
 	g.init();
 
 	Search s = Search();
-	s.depth = 4;
+	s.depth = 6;
 	s.gen_keymap();
-	std::cout << s.hash(g.root) << std::endl;
 
 	while (true) {
 		g.root.print();
+		std::cout << s.hash(g.root) << std::endl;
 		if (g.root.turn.compare("white")==0) {
 			g.take_input("");
 			g.process_input();

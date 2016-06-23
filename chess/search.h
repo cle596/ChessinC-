@@ -24,7 +24,6 @@ public:
 		Q_keymap, q_keymap,
 		K_keymap, k_keymap;
 	
-	int recurse(Node&,int,int,int);
 	int guess(Node&,int);
 	void tcurse(Node&);
 	void sort(std::vector<std::string>& moves, std::string move);

@@ -13,6 +13,7 @@ Search::ab(Node& n,int alpha,int beta,int d)
 	int g, a, b;
 	if (db.find(hash(n)) != db.end()) {
 		Value v = db[hash(n)];
+		//std::cout << v.a << " " << v.b << std::endl;
 		if (v.a >= beta) return v.a;
 		if (v.b <= alpha) return v.b;
 		alpha = std::max(alpha, v.a);
@@ -22,101 +23,69 @@ Search::ab(Node& n,int alpha,int beta,int d)
 		g = n.score();
 	}
 	else if (n.turn == "white") {
-		g = -inf; a = alpha;
-		for (size_t x = 0; x < n.moves.size(); ++x) {
-			while (g < beta) {
-				Node nn = Node(n);
-				nn.update_board(n.moves.at(x));
-				nn.flips();
-				g = std::max(g, ab(nn, a, beta, d - 1));
-				a = std::max(a, g);
-			}
+		g = -inf; 
+		a = alpha;
+		n.gen_moves();
+		int c = 0;
+		while (c < int(n.moves.size()) && g < beta) {
+			Node nn = Node(n);
+			nn.update_board(n.moves.at(c)); nn.flips();
+			g = std::max(g, ab(nn, a, beta, d - 1));
+			a = std::max(a, g);
+			c += 1;
 		}
 	}
 	else {
-		g = inf; b = beta;
-		for (size_t x = 0; x < n.moves.size(); ++x) {
-			while (g > alpha) {
-				Node nn = Node(n);
-				nn.update_board(n.moves.at(x));
-				nn.flips();
-				g = std::min(g, ab(nn, alpha, b, d - 1));
-				if (d == depth &&
-					g < b) {
-					bmove = n.moves.at(x);
-				}
-				else {
-					b = std::min(b, g);
-				}
+		g = inf; 
+		b = beta;
+		n.gen_moves();
+		int c = 0;
+		while (c < int(n.moves.size()) && g > alpha) {
+			Node nn = Node(n);
+			nn.update_board(n.moves.at(c)); nn.flips();
+			g = std::min(g, ab(nn, alpha, b, d - 1));
+			//std::cout << "g: " << g << " alpha: " << alpha << std::endl;
+			if (d == depth &&
+				g < b) {
+				bmove = n.moves.at(c);
+				b = g;
 			}
+			else {
+				b = std::min(b, g);
+			}
+			c += 1;
 		}
 	}
 	if (g <= alpha) {
 		n.b = g;
-		db[hash(n)] = Value(-100000,n.b);
+		if (db.find(hash(n)) == db.end()) {
+			db[hash(n)] = Value(-100000, n.b);
+		}
+		else {
+			db[hash(n)].b = n.b;
+		}
 	}
 	if (g > alpha && g < beta) {
 		n.a = g;
 		n.b = g;
-		db[hash(n)] = Value(n.a,n.b);
+		if (db.find(hash(n)) == db.end()) {
+			db[hash(n)] = Value(n.a, n.b);
+		}
+		else {
+			db[hash(n)].a = n.a;
+			db[hash(n)].b = n.b;
+		}
 	}
 	if (g >= beta) {
 		n.a = g;
-		db[hash(n)] = Value(n.a,100000);
+		if (db.find(hash(n)) == db.end()) {
+			db[hash(n)] = Value(n.a, 100000);
+		}
+		else {
+			db[hash(n)].a = n.a;
+		}
 	}
 	return g;
-}
-
-int
-Search::recurse(Node& n,int d,int max,int min)
-{
-	if (db.find(hash(n)) != db.end()) {
-		if (n.a >= min) return n.a;
-		if (n.b <= max) return n.b;
-		max = std::max(max,n.a);
-		min = std::min(min,n.b);
-	}
-	n.gen_moves();
-	if (int(history.size()) > depth - d) {
-		sort(n.moves, history.at(depth - d));
-	}
-	if (d > 0) {
-		for (size_t x = 0; x < n.moves.size(); ++x) {
-			Node nn = Node(n);
-			nn.update_board(n.moves.at(x));
-			nn.flips();
-			nn.nscore = recurse(nn, d - 1, max, min);
-			if (nn.nscore >= min && n.turn == "white") {
-				return min;
-			}
-			else if (nn.nscore <= max && n.turn == "black") {
-				return max;
-			}
-			else if (nn.nscore > max &&
-				n.turn=="white") {
-				max = nn.nscore;
-			}
-			else if (nn.nscore < min &&
-				n.turn=="black") {
-				min = nn.nscore;
-				if (d == depth) {
-					bmove.assign(n.moves.at(x));
-				}
-			}
-		}
-		if (n.turn == "white") {
-			return max;
-		}
-		else{
-			return min;
-		}
-	}
-	else /*if (d == 0)*/ {
-		n.nscore = n.score();
-		//db[hash(n)] = n;
-		return n.nscore; 
-	}
-	//if ()
 }
 
 int Search::guess(Node& n,int g) {
@@ -127,11 +96,11 @@ int Search::guess(Node& n,int g) {
 	int b = 0;
 	while (lower < upper) {
 		b = std::max(g, lower + 1);
-		g = recurse(n, depth, b - 1, b);
-		/*std::cout << "guess: " << g
+		g = ab(n, b - 1, b,depth);
+		std::cout << "guess: " << g
 			<< " upper: " << upper
 			<< " lower: " << lower
-			<< std::endl;*/
+			<< std::endl;
 		if (g < b) {
 			upper = g;
 		}
@@ -152,14 +121,16 @@ Search::tcurse(Node& n) {
 	while (depth <= max) {
 		clock_t t = clock();
 		std::cout << "depth: " << depth << std::endl;
-		std::cout << "ab score: " << recurse(n, depth, -inf, inf) << std::endl;
-		//g = guess(n,g);
-		//std::cout << "guess: " << g << std::endl;
+		//std::cout << "ab score: " << ab(n,-inf, inf,depth) << std::endl;
+		g = guess(n,g);
+		std::cout << "guess: " << g << std::endl;
 		std::cout << "best move: " << Game::pos_to_move(bmove) << std::endl;
+		/*
 		std::cout << "history: " << std::endl;
 		for (size_t x = 0; x < history.size(); ++x) {
 			std::cout << Game::pos_to_move(history.at(x)) << std::endl;
 		}
+		*/
 		std::cout << "time: " << (clock() - t) / 1000.0 << std::endl << std::endl;
 		/*
 		if (int(history.size()) >= depth) {
@@ -191,19 +162,19 @@ void
 Search::gen_keymap() {
 	int z = 0;
 	for (int x = 0; x < 120; ++x) {
-		P_keymap[x] = z;
-		N_keymap[x] = z + 120;
-		B_keymap[x] = z + 120*2;
-		R_keymap[x] = z + 120 * 3;
-		Q_keymap[x] = z + 120 * 4;
-		K_keymap[x] = z + 120 * 5;
-		p_keymap[x] = z + 120 * 6;
-		n_keymap[x] = z + 120 * 7;
-		b_keymap[x] = z + 120 * 8;
-		r_keymap[x] = z + 120 * 9;
-		q_keymap[x] = z + 120 * 10;
-		k_keymap[x] = z + 120 * 11;
-		z += 1;
+		P_keymap[x] = x;
+		N_keymap[x] = x + 120;
+		B_keymap[x] = x + 120*2;
+		R_keymap[x] = x + 120 * 3;
+		Q_keymap[x] = x + 120 * 4;
+		K_keymap[x] = x + 120 * 5;
+		p_keymap[x] = x + 120 * 6;
+		n_keymap[x] = x + 120 * 7;
+		b_keymap[x] = x + 120 * 8;
+		r_keymap[x] = x + 120 * 9;
+		q_keymap[x] = x + 120 * 10;
+		k_keymap[x] = x + 120 * 11;
+		//z += 1;
 	}
 	//std::cout << std::bitset< 16 >(k_keymap[119]).to_string << std::endl;
 }
@@ -248,6 +219,7 @@ Search::hash(Node& n) {
 		else if (n.board.at(x) == 'k') {
 			hash |= k_keymap[x];
 		}
+		std::cout << "piece: " << n.board.at(x) << " hash: " << hash << std::endl;
 	}
 	return std::bitset<16>(hash).to_string();
 }
