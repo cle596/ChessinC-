@@ -11,6 +11,7 @@ int
 Search::ab(Node& n,int alpha,int beta,int d)
 {
 	int g, a, b;
+	/*
 	if (db.find(hash(n)) != db.end()) {
 		Value v = db[hash(n)];
 		//std::cout << v.a << " " << v.b << std::endl;
@@ -19,6 +20,7 @@ Search::ab(Node& n,int alpha,int beta,int d)
 		alpha = std::max(alpha, v.a);
 		beta = std::min(beta, v.b);
 	}
+	*/
 	if (d == 0) {
 		g = n.score();
 	}
@@ -121,9 +123,9 @@ Search::tcurse(Node& n) {
 	while (depth <= max) {
 		clock_t t = clock();
 		std::cout << "depth: " << depth << std::endl;
-		//std::cout << "ab score: " << ab(n,-inf, inf,depth) << std::endl;
-		g = guess(n,g);
-		std::cout << "guess: " << g << std::endl;
+		std::cout << "ab score: " << ab(n,-inf, inf,depth) << std::endl;
+		//g = guess(n,g);
+		//std::cout << "guess: " << g << std::endl;
 		std::cout << "best move: " << Game::pos_to_move(bmove) << std::endl;
 		/*
 		std::cout << "history: " << std::endl;
@@ -160,7 +162,6 @@ Search::sort(std::vector<std::string>& moves,std::string move) {
 
 void 
 Search::gen_keymap() {
-	int z = 0;
 	for (int x = 0; x < 120; ++x) {
 		P_keymap[x] = x;
 		N_keymap[x] = x + 120;
@@ -179,47 +180,71 @@ Search::gen_keymap() {
 	//std::cout << std::bitset< 16 >(k_keymap[119]).to_string << std::endl;
 }
 
-std::string
+int
 Search::hash(Node& n) {
 	int hash = 0;
 	for (size_t x = 0; x < n.board.length(); ++x) {
 		if (n.board.at(x) == 'P') {
-			hash |= P_keymap[x];
+			//std::cout << P_keymap[x] << std::endl;
+			hash ^= P_keymap[x];
+			//std::cout << hash << std::endl;
 		}
 		else if (n.board.at(x) == 'p') {
-			hash |= p_keymap[x];
+			//std::cout << p_keymap[x] << std::endl;
+			hash ^= p_keymap[x];
+			//std::cout << hash << std::endl;
 		}
 		else if (n.board.at(x) == 'N') {
-			hash |= N_keymap[x];
+			//std::cout << N_keymap[x] << std::endl;
+			hash ^= N_keymap[x];
+			//std::cout << hash << std::endl;
 		}
 		else if (n.board.at(x) == 'n') {
-			hash |= n_keymap[x];
+			//std::cout << n_keymap[x] << std::endl;
+			hash ^= n_keymap[x];
+			//std::cout << hash << std::endl;
 		}
 		else if (n.board.at(x) == 'B') {
-			hash |= B_keymap[x];
+			//std::cout << B_keymap[x] << std::endl;
+			hash ^= B_keymap[x];
+			//std::cout << hash << std::endl;
 		}
 		else if (n.board.at(x) == 'b') {
-			hash |= b_keymap[x];
+			//std::cout << b_keymap[x] << std::endl;
+			hash ^= b_keymap[x];
+			//std::cout << hash << std::endl;
 		}
 		else if (n.board.at(x) == 'R') {
-			hash |= R_keymap[x];
+			//std::cout << R_keymap[x] << std::endl;
+			hash ^= R_keymap[x];
+			//std::cout << hash << std::endl;
 		}
 		else if (n.board.at(x) == 'r') {
-			hash |= r_keymap[x];
+			//std::cout << r_keymap[x] << std::endl;
+			hash ^= r_keymap[x];
+			//std::cout << hash << std::endl;
 		}
 		else if (n.board.at(x) == 'Q') {
-			hash |= Q_keymap[x];
+			//std::cout << Q_keymap[x] << std::endl;
+			hash ^= Q_keymap[x];
+			//std::cout << hash << std::endl;
 		}
 		else if (n.board.at(x) == 'q') {
-			hash |= q_keymap[x];
+			//std::cout << q_keymap[x] << std::endl;
+			hash ^= q_keymap[x];
+			//std::cout << hash << std::endl;
 		}
 		else if (n.board.at(x) == 'K') {
-			hash |= K_keymap[x];
+			//std::cout << K_keymap[x] << std::endl;
+			hash ^= K_keymap[x];
+			//std::cout << hash << std::endl;
 		}
 		else if (n.board.at(x) == 'k') {
-			hash |= k_keymap[x];
+			//std::cout << k_keymap[x] << std::endl;
+			hash ^= k_keymap[x];
+			//std::cout << hash << std::endl;
 		}
-		std::cout << "piece: " << n.board.at(x) << " hash: " << hash << std::endl;
 	}
-	return std::bitset<16>(hash).to_string();
+	//return std::bitset<16>(hash).to_string();
+	return hash;
 }

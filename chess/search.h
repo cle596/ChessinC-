@@ -12,7 +12,7 @@ class Search {
 public:
 
 	std::string bmove;
-	std::map<std::string,Value> db;
+	std::map<int,Value> db;
 	std::vector<std::string> history;
 	int depth;
 	static const int inf = 100000;
@@ -28,6 +28,6 @@ public:
 	void tcurse(Node&);
 	void sort(std::vector<std::string>& moves, std::string move);
 	void gen_keymap();
-	std::string hash(Node&);
+	int hash(Node&);
 	int ab(Node&, int, int, int);
 };
