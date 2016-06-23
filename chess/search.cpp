@@ -10,8 +10,8 @@
 int
 Search::ab(Node& n,int alpha,int beta,int d)
 {
+	std::cout << "depth: " << d << std::endl;
 	int g, a, b;
-	/*
 	if (db.find(hash(n)) != db.end()) {
 		Value v = db[hash(n)];
 		//std::cout << v.a << " " << v.b << std::endl;
@@ -20,7 +20,6 @@ Search::ab(Node& n,int alpha,int beta,int d)
 		alpha = std::max(alpha, v.a);
 		beta = std::min(beta, v.b);
 	}
-	*/
 	if (d == 0) {
 		g = n.score();
 	}
@@ -43,7 +42,7 @@ Search::ab(Node& n,int alpha,int beta,int d)
 		n.gen_moves();
 		int c = 0;
 		while (c < int(n.moves.size()) && g > alpha) {
-			Node nn = Node(n);
+			Node nn = Node(n); // problem with replacing name nn
 			nn.update_board(n.moves.at(c)); nn.flips();
 			g = std::min(g, ab(nn, alpha, b, d - 1));
 			//std::cout << "g: " << g << " alpha: " << alpha << std::endl;
@@ -122,18 +121,20 @@ Search::tcurse(Node& n) {
 	history.clear();
 	while (depth <= max) {
 		clock_t t = clock();
-		std::cout << "depth: " << depth << std::endl;
-		std::cout << "ab score: " << ab(n,-inf, inf,depth) << std::endl;
+		//std::cout << "depth: " << depth << std::endl;
+		//std::cout << "ab score: " << ab(n,-inf, inf,depth) << std::endl;
+		std::cout << "depth in it: " << depth << std::endl;
+		ab(n, -inf, inf, depth);
 		//g = guess(n,g);
 		//std::cout << "guess: " << g << std::endl;
-		std::cout << "best move: " << Game::pos_to_move(bmove) << std::endl;
+		//std::cout << "best move: " << Game::pos_to_move(bmove) << std::endl;
 		/*
 		std::cout << "history: " << std::endl;
 		for (size_t x = 0; x < history.size(); ++x) {
 			std::cout << Game::pos_to_move(history.at(x)) << std::endl;
 		}
 		*/
-		std::cout << "time: " << (clock() - t) / 1000.0 << std::endl << std::endl;
+		//std::cout << "time: " << (clock() - t) / 1000.0 << std::endl << std::endl;
 		/*
 		if (int(history.size()) >= depth) {
 			history.at(depth-1) = bmove;
@@ -146,6 +147,9 @@ Search::tcurse(Node& n) {
 	}
 	if (depth > max) {
 		depth -= 1;
+	}
+	if (depth == max) {
+		std::cout << "best move: " << Game::pos_to_move(bmove) << std::endl;
 	}
 }
 
