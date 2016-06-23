@@ -16,18 +16,22 @@ int main() {
 	g.init();
 
 	Search s = Search();
-	s.depth = 6;
+	s.depth = 10;
 	s.gen_keymap();
 
 	while (true) {
 		g.root.print();
-		std::cout << "hash: " << s.hash(g.root) << std::endl;
 		if (g.root.turn.compare("white")==0) {
 			g.take_input("");
 			g.process_input();
 		}
 		else {
+			s.bmove = "";
 			s.tcurse(g.root);
+			if (s.bmove != "") {
+				std::cout << Game::pos_to_move(s.bmove) << std::endl;
+			}
+			g.root.moves.clear();
 			g.take_input("");
 			while (!g.process_input()) {
 				g.take_input("");

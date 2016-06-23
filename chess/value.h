@@ -2,7 +2,7 @@
 
 class Value {
 public:
-	int a, b;
+	int a, b, d;
 	Value();
-	Value(int, int);
+	Value(int, int, int);
 };
