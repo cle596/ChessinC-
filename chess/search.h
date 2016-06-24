@@ -9,14 +9,16 @@
 #include "value.h"
 #include "macros.h"
 
+using namespace std;
+
 class Search {
 public:
 
-	std::string bmove;
-	std::map<int,Value> db;
-	std::vector<std::string> history;
+	string bmove;
+	map<int,Value> db;
+	vector<string> history;
 	int depth;
-	std::map<int, int>
+	map<int, int>
 		P_keymap, p_keymap,
 		N_keymap, n_keymap,
 		B_keymap, b_keymap,
@@ -26,9 +28,9 @@ public:
 	
 	int guess(Node&,int);
 	void tcurse(Node&);
-	void sort(std::vector<std::string>& moves, std::string move);
+	void sort(vector<string>& moves, string move);
 	void gen_keymap();
 	int hash(Node&);
 	int ab(Node&, int, int, int);
-	void make_child(std::vector<Node>&, Node&, std::string);
+	void make_child(vector<Node>&, Node&, string);
 };

@@ -99,4 +99,4 @@ int
 	Node::nqueen_pst[120],
 	Node::nking_pst[120];
 
-const std::string Node::castle_input[4] = { "wk00" ,"wq00","bk00","bq00" };
+const string Node::castle_input[4] = { "wk00" ,"wq00","bk00","bq00" };

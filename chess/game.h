@@ -6,6 +6,8 @@
 
 #include "node.h"
 
+using namespace std;
+
 class Game {
 
 public:
@@ -14,23 +16,23 @@ public:
 	Node root = Node();
 
 	//input strings
-	std::string input;
-	std::string pos;
+	string input;
+	string pos;
 
 	//for debugging purposes
-	std::vector<std::string> moves;
-	std::vector<std::string> tmoves;
+	vector<string> moves;
+	vector<string> tmoves;
 
 	void init(); // start msg
 
-	void take_input(std::string); //check string length of input and if its a castle move
+	void take_input(string); //check string length of input and if its a castle move
 
 	//convert between number index and alphabetic move string
-	std::string move_to_pos(std::string move);
-	static std::string pos_to_move(std::string pos);
+	string move_to_pos(string move);
+	static string pos_to_move(string pos);
 
 	//translate alphabetic move to index position string
-	std::vector<std::string> translate_moves(std::vector<std::string>);
+	vector<string> translate_moves(vector<string>);
 
 	//check if input move is legal by generating possible move vector 
 	//and update the game's node 

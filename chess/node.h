@@ -3,13 +3,15 @@
 #include <string>
 #include <vector>
 
+using namespace std;
+
 class Node {
 
 public:
 
 	int a, b;
 
-	std::string board =
+	string board =
 		"         \n"
 		"         \n"
 		" rnbqkbnr\n"
@@ -25,9 +27,9 @@ public:
 
 	int nscore;
 
-	std::string turn;
+	string turn;
 	bool castle[4]; //wk,wq,bk,bq
-	static const std::string castle_input[4];
+	static const string castle_input[4];
 	int en_passant;
 
 	static const int 
@@ -64,13 +66,13 @@ public:
 		bdub[8] = {31,32,33,34,35,36,37,38},
 		wdub[8] = { 81,82,83,84,85,86,87,88 };
 
-	std::vector<std::string> moves;
+	vector<string> moves;
 
 	//constructor and copy constructor 
 	Node();
 	Node(const Node& n);
 
-	void update_board(std::string);
+	void update_board(string);
 	void print();
 
 	//move generation functions
@@ -80,7 +82,7 @@ public:
 	void rook(int);
 	void queen(int);
 	void king(int);
-	std::vector<std::string> gen_moves();
+	vector<string> gen_moves();
 
 	//rotates pst for blackside
 	static int* rotate_pst(const int*,int*);

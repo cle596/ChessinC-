@@ -8,6 +8,8 @@
 #include "value.h"
 #include "macros.h"
 
+using namespace std;
+
 int
 Search::ab(Node& n,int alpha,int beta,int d)
 {
@@ -17,8 +19,8 @@ Search::ab(Node& n,int alpha,int beta,int d)
 		if (v.d <= d) {
 			if (v.a >= beta) return v.a;
 			if (v.b <= alpha) return v.b;
-			alpha = std::max(alpha, v.a);
-			beta = std::min(beta, v.b);
+			alpha = max(alpha, v.a);
+			beta = min(beta, v.b);
 		}
 	}
 	if (d == 0) {
@@ -29,11 +31,11 @@ Search::ab(Node& n,int alpha,int beta,int d)
 		a = alpha;
 		n.gen_moves();
 		int c = 0;
-		std::vector<Node> children;
+		vector<Node> children;
 		while (c < int(n.moves.size()) && g < beta) {
 			make_child(children, n, n.moves.at(c));
-			g = std::max(g, ab(children.back(), a, beta, d - 1));
-			a = std::max(a, g);
+			g = max(g, ab(children.back(), a, beta, d - 1));
+			a = max(a, g);
 			c += 1;
 		}
 	}
@@ -45,7 +47,7 @@ Search::ab(Node& n,int alpha,int beta,int d)
 		std::vector<Node> children;
 		while (c < int(n.moves.size()) && g > alpha) {
 			make_child(children,n,n.moves.at(c));
-			g = std::min(g, ab(children.back(), alpha, b, d - 1));
+			g = min(g, ab(children.back(), alpha, b, d - 1));
 			if (d == depth) {
 				if (g < b) {
 					bmove = n.moves.at(c);
@@ -53,7 +55,7 @@ Search::ab(Node& n,int alpha,int beta,int d)
 				}
 			}
 			else {
-				b = std::min(b, g);
+				b = min(b, g);
 			}
 			c += 1;
 		}
@@ -101,7 +103,7 @@ Search::ab(Node& n,int alpha,int beta,int d)
 }
 
 void
-Search::make_child(std::vector<Node>& children,Node& parent,std::string move) {
+Search::make_child(vector<Node>& children,Node& parent,string move) {
 	children.push_back(Node(parent));
 	children.back().update_board(move);
 }
@@ -113,7 +115,7 @@ Search::guess(Node& n,int g) {
 	int b = 0;
 	while (lower < upper) {
 		g = (upper + lower + 1) / 2;
-		b = std::max(g, lower + 1);
+		b = max(g, lower + 1);
 		g = ab(n, b - 1, b,depth);
 		if (g < b) {
 			upper = g;
@@ -141,12 +143,12 @@ Search::tcurse(Node& n) {
 		depth -= 1;
 	}
 	if (depth == max) {
-		std::cout << "best move: " << Game::pos_to_move(bmove) << std::endl;
+		cout << "best move: " << Game::pos_to_move(bmove) << endl;
 	}
 }
 
 void
-Search::sort(std::vector<std::string>& moves,std::string move) {
+Search::sort(vector<string>& moves,string move) {
 	for (size_t x = 0; x < moves.size(); ++x) {
 		if (moves.at(x) == move) {
 			moves.at(x) = moves.at(0);

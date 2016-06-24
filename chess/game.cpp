@@ -8,9 +8,11 @@
 #include "game.h"
 #include "macros.h"
 
+using namespace std;
+
 void
 Game::init() {
-	std::cout << "time\nto play\nchess!" << std::endl;
+	cout << "time\nto play\nchess!" << endl;
 	Node::set_npst();
 }
 
@@ -23,17 +25,17 @@ Game::process_input() {
 		return true;
 	}
 	else {
-		std::cout << "not a legal move" << std::endl;
+		cout << "not a legal move" << endl;
 		return false;
 	}
 }
 
 void
-Game::take_input(std::string move) {
-	std::cout << "make your move: ";
+Game::take_input(string move) {
+	cout << "make your move: ";
 	while (true) {
 		if (move == "") {
-			std::cin >> input;
+			cin >> input;
 		}
 		else {
 			input = move;
@@ -42,8 +44,8 @@ Game::take_input(std::string move) {
 			break;
 		}
 		else {
-			std::cout << "not a legal move" << std::endl;
-			std::cout << "make your move: ";
+			cout << "not a legal move" << endl;
+			cout << "make your move: ";
 		}
 	}
 	if (in_array(input, Node::castle_input)) {
@@ -54,11 +56,11 @@ Game::take_input(std::string move) {
 	}
 }
 
-std::string
-Game::move_to_pos(std::string move) {
-	std::string pos;
-	std::map<char, int> cols;
-	std::map<char, int> rows;
+string
+Game::move_to_pos(string move) {
+	string pos;
+	map<char, int> cols;
+	map<char, int> rows;
 	for (int x = 0; x < 8; ++x) {
 		cols[97 + x] = 1 + x;
 	}
@@ -67,7 +69,7 @@ Game::move_to_pos(std::string move) {
 	}
 	for (int x = 0; x < 3; x += 2) {
 		pos.append(
-			std::to_string(
+			to_string(
 				cols[move.at(x)] + 
 				rows[move.at(x + 1)]
 			)
@@ -76,19 +78,19 @@ Game::move_to_pos(std::string move) {
 	return pos;
 }
 
-std::string
-Game::pos_to_move(std::string pos) {
-	std::string move;
-	std::map<int, char> cols;
-	std::map<int, char> rows;
+string
+Game::pos_to_move(string pos) {
+	string move;
+	map<int, char> cols;
+	map<int, char> rows;
 	for (int x = 0; x < 8; ++x) {
 		cols[1 + x] = 97 + x;
 	}
 	for (int x = 0; x < 8; ++x) {
 		rows[9 - x] = 49 + x;
 	}
-	int p1 = std::stoi(pos.substr(0, 2), nullptr);
-	int p2 = std::stoi(pos.substr(2, 2), nullptr);
+	int p1 = stoi(pos.substr(0, 2), nullptr);
+	int p2 = stoi(pos.substr(2, 2), nullptr);
 	move += cols.at(p1 - (p1 / 10) * 10);
 	move += rows.at(p1 / 10);
 	move += cols.at(p2 - (p2 / 10) * 10);
@@ -96,8 +98,8 @@ Game::pos_to_move(std::string pos) {
 	return move;
 }
 
-std::vector<std::string>
-Game::translate_moves(std::vector<std::string> moves) {
+vector<string>
+Game::translate_moves(vector<string> moves) {
 	for (size_t x = 0; x < moves.size(); ++x) {
 		tmoves.push_back(pos_to_move(moves.at(x)));
 	}

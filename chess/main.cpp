@@ -10,6 +10,8 @@
 #include "game.h"
 #include "search.h"
 
+using namespace std;
+
 int main() {
 
 	Game g = Game();
@@ -21,7 +23,7 @@ int main() {
 
 	while (true) {
 		g.root.print();
-		if (g.root.turn.compare("white")==0) {
+		if (g.root.turn=="white") {
 			g.take_input("");
 			g.process_input();
 		}
@@ -29,7 +31,7 @@ int main() {
 			s.bmove = "";
 			s.tcurse(g.root);
 			if (s.bmove != "") {
-				std::cout << Game::pos_to_move(s.bmove) << std::endl;
+				cout << Game::pos_to_move(s.bmove) << endl;
 			}
 			g.root.moves.clear();
 			g.take_input("");

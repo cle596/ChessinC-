@@ -8,6 +8,8 @@
 #include "node.h"
 #include "macros.h"
 
+using namespace std;
+
 int*
 Node::rotate_pst(const int* pst,int* npst) {
 	for (size_t x = 0; x < 120; ++x) {
@@ -71,7 +73,7 @@ Node::Node(const Node & n)
 }
 
 void
-Node::update_board(std::string pos) {
+Node::update_board(string pos) {
 	if (in_array(pos, castle_input)) {
 		if (pos == castle_input[0]) {
 			board.replace(95, 4, ".RK.");
@@ -87,8 +89,8 @@ Node::update_board(std::string pos) {
 		}
 	}
 	else {
-		int from = std::stoi(pos.substr(0, 2));
-		int to = std::stoi(pos.substr(2, 2));
+		int from = stoi(pos.substr(0, 2));
+		int to = stoi(pos.substr(2, 2));
 		if (board.at(from) == 'K') {
 			castle[0] = false;
 			castle[1] = false;
@@ -134,7 +136,7 @@ Node::update_board(std::string pos) {
 		board.replace(
 			to,
 			1,
-			std::string(1, board.at(from))
+			string(1, board.at(from))
 		);
 		board.replace(from, 1, ".");
 	}
@@ -143,17 +145,17 @@ Node::update_board(std::string pos) {
 
 void
 Node::print() {
-	std::string formatted_board;
+	string formatted_board;
 	for (size_t x = 0; x < board.length(); ++x) {
 		formatted_board += board.at(x);
 		if (board.at(x) != '\n') {
 			formatted_board += ' ';
 		}
 	}
-	std::cout << formatted_board << std::endl;
+	cout << formatted_board << endl;
 }
 
-std::vector<std::string>
+vector<string>
 Node::gen_moves() {
 	char pa = 'P'; char na = 'N';
 	char ba = 'B'; char ra = 'R';
@@ -246,7 +248,7 @@ Node::score() {
 }
 
 void Node::flip_foe() {
-	if (turn.compare("white") == 0) {
+	if (turn=="white") {
 		for (int x = 0; x < 6; ++x) {
 			foe[x] = tolower(foe[x]);
 		}
@@ -259,7 +261,7 @@ void Node::flip_foe() {
 }
 
 void Node::flip_turn() {
-	if (turn.compare("white") == 0) {
+	if (turn=="white") {
 		turn = "black";
 	}
 	else {
@@ -268,7 +270,7 @@ void Node::flip_turn() {
 }
 
 void Node::flip_dub() {
-	if (turn.compare("white") == 0) {
+	if (turn=="white") {
 		for (int x = 0; x < 8; ++x) {
 			dub[x] = wdub[x];
 		}
