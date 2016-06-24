@@ -13,62 +13,77 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\gen">
+      <UniqueIdentifier>{aec649c6-5ef2-46a4-b3ef-bbdb25f35b7c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\headers">
+      <UniqueIdentifier>{6b029343-e665-4c0e-9ac4-d9cf14b8c97a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\test">
+      <UniqueIdentifier>{92beb644-08aa-418d-877c-3ea9d884336d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\search">
+      <UniqueIdentifier>{c6f6f347-870b-4022-8a4b-12a051b01e61}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\node">
+      <UniqueIdentifier>{bc57856f-39a0-499b-aa7a-44642d6dee74}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="test.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="node.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="search.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="knight.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="pawn.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="bishop.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="rook.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="queen.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\gen</Filter>
     </ClCompile>
     <ClCompile Include="king.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\gen</Filter>
     </ClCompile>
-    <ClCompile Include="nodedata.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="knight.cpp">
+      <Filter>Source Files\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="rook.cpp">
+      <Filter>Source Files\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="pawn.cpp">
+      <Filter>Source Files\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="queen.cpp">
+      <Filter>Source Files\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="test.cpp">
+      <Filter>Source Files\test</Filter>
+    </ClCompile>
+    <ClCompile Include="search.cpp">
+      <Filter>Source Files\search</Filter>
     </ClCompile>
     <ClCompile Include="value.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\search</Filter>
+    </ClCompile>
+    <ClCompile Include="node.cpp">
+      <Filter>Source Files\node</Filter>
+    </ClCompile>
+    <ClCompile Include="nodedata.cpp">
+      <Filter>Source Files\node</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="node.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="game.h">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="macros.h">
+      <Filter>Source Files\headers</Filter>
     </ClInclude>
     <ClInclude Include="search.h">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\search</Filter>
     </ClInclude>
-    <ClInclude Include="macros.h">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="node.h">
+      <Filter>Source Files\node</Filter>
     </ClInclude>
     <ClInclude Include="value.h">
+      <Filter>Source Files\search</Filter>
+    </ClInclude>
+    <ClInclude Include="game.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

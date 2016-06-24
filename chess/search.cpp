@@ -11,17 +11,35 @@
 
 using namespace std;
 
-void
-Search::retrieve(Node& n,int& alpha,int& beta,int& d) {
+Search::Search() {
+	maps['P'] = P_keymap;
+	maps['N'] = N_keymap;
+	maps['B'] = B_keymap;
+	maps['R'] = R_keymap;
+	maps['Q'] = Q_keymap;
+	maps['K'] = K_keymap;
+	maps['p'] = p_keymap;
+	maps['n'] = n_keymap;
+	maps['b'] = b_keymap;
+	maps['r'] = r_keymap;
+	maps['q'] = q_keymap;
+	maps['k'] = k_keymap;
+	gen_keymap();
+}
+
+int
+Search::retrieve(Node& n,int& alpha,int& beta,int& d,int& ret) {
+	ret = inf * 2;
 	if (in_tt(db, hash(n))) {
 		Value v = db[hash(n)];
 		if (v.d <= d) {
-			//if (v.a >= beta) return v.a;
-			//if (v.b <= alpha) return v.b;
+			if (v.a >= beta) ret=v.a;
+			if (v.b <= alpha) ret=v.b;
 			alpha = max(alpha, v.a);
 			beta = min(beta, v.b);
 		}
 	}
+	return ret;
 }
 
 void
@@ -32,7 +50,7 @@ Search::store(Node& n, int& alpha, int& beta, int& d,int& g) {
 			db[hash(n)] = Value(-100000, n.b, d);
 		}
 		else {
-			if (db[hash(n)].d >= d) {
+			if (db[hash(n)].d <= d) {
 				db[hash(n)].b = n.b;
 				db[hash(n)].d = d;
 			}
@@ -45,7 +63,7 @@ Search::store(Node& n, int& alpha, int& beta, int& d,int& g) {
 			db[hash(n)] = Value(n.a, n.b, d);
 		}
 		else {
-			if (db[hash(n)].d >= d) {
+			if (db[hash(n)].d <= d) {
 				db[hash(n)].a = n.a;
 				db[hash(n)].b = n.b;
 				db[hash(n)].d = d;
@@ -58,7 +76,7 @@ Search::store(Node& n, int& alpha, int& beta, int& d,int& g) {
 			db[hash(n)] = Value(n.a, 100000, d);
 		}
 		else {
-			if (db[hash(n)].d >= d) {
+			if (db[hash(n)].d <= d) {
 				db[hash(n)].a = n.a;
 				db[hash(n)].d = d;
 			}
@@ -69,8 +87,14 @@ Search::store(Node& n, int& alpha, int& beta, int& d,int& g) {
 int
 Search::ab(Node& n,int alpha,int beta,int d)
 {
-	int g, a, b;
-	retrieve(n,alpha,beta,d);
+	int g, a, b, c=0,ret;
+	std::vector<Node> children;
+	/*
+	ret=retrieve(n,alpha,beta,d,ret);
+	if (ret != inf * 2) {
+		return ret;
+	}
+	*/
 	if (d == 0) {
 		g = n.score();
 	}
@@ -78,8 +102,6 @@ Search::ab(Node& n,int alpha,int beta,int d)
 		g = -inf; 
 		a = alpha;
 		n.gen_moves();
-		int c = 0;
-		vector<Node> children;
 		while (c < int(n.moves.size()) && g < beta) {
 			make_child(children, n, n.moves.at(c));
 			g = max(g, ab(children.back(), a, beta, d - 1));
@@ -91,10 +113,9 @@ Search::ab(Node& n,int alpha,int beta,int d)
 		g = inf; 
 		b = beta;
 		n.gen_moves();
-		int c = 0;
-		std::vector<Node> children;
 		while (c < int(n.moves.size()) && g > alpha) {
 			make_child(children,n,n.moves.at(c));
+			cout << children.back().turn << endl; // color not flipped!
 			g = min(g, ab(children.back(), alpha, b, d - 1));
 			if (d == depth) {
 				if (g < b) {
@@ -108,7 +129,7 @@ Search::ab(Node& n,int alpha,int beta,int d)
 			c += 1;
 		}
 	}
-	store(n, alpha, beta, d, g);
+	//store(n, alpha, beta, d, g);
 	return g;
 }
 
@@ -116,56 +137,6 @@ void
 Search::make_child(vector<Node>& children,Node& parent,string move) {
 	children.push_back(Node(parent));
 	children.back().update_board(move);
-}
-
-int 
-Search::guess(Node& n,int g) {
-	int upper = inf;
-	int lower = -inf;
-	int b = 0;
-	while (lower < upper) {
-		g = (upper + lower + 1) / 2;
-		b = max(g, lower + 1);
-		g = ab(n, b - 1, b,depth);
-		if (g < b) {
-			upper = g;
-		}
-		else {
-			lower = g;
-		}
-	}
-	return g;
-}
-
-void 
-Search::tcurse(Node& n) {
-	int max = depth;
-	depth = 1;
-	int g = 0;
-	history.clear();
-	while (depth <= max) {
-		clock_t t = clock();
-		g = guess(n, g);
-		n.moves.clear();
-		depth += 1;
-	}
-	if (depth > max) {
-		depth -= 1;
-	}
-	if (depth == max) {
-		cout << "best move: " << Game::pos_to_move(bmove) << endl;
-	}
-}
-
-void
-Search::sort(vector<string>& moves,string move) {
-	for (size_t x = 0; x < moves.size(); ++x) {
-		if (moves.at(x) == move) {
-			moves.at(x) = moves.at(0);
-			moves.at(0) = move;
-			return;
-		}
-	}
 }
 
 void 

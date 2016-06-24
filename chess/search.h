@@ -13,7 +13,7 @@ using namespace std;
 
 class Search {
 public:
-
+	Search();
 	string bmove;
 	map<int,Value> db;
 	vector<string> history;
@@ -27,13 +27,10 @@ public:
 		K_keymap, k_keymap;
 	map<char, map<int,int>> maps;
 	
-	int guess(Node&,int);
-	void tcurse(Node&);
-	void sort(vector<string>& moves, string move);
 	void gen_keymap();
 	int hash(Node&);
 	int ab(Node&, int, int, int);
 	void make_child(vector<Node>&, Node&, string);
-	void retrieve(Node&n, int&, int&, int&);
+	int retrieve(Node&n, int&, int&, int&,int&);
 	void store(Node&, int&, int&, int&, int&);
 };
