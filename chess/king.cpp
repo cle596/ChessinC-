@@ -1,17 +1,16 @@
 #include "node.h"
 #include "macros.h"
 
+#define incr Kmoves[y]
+
 void
 Node::king(int x) {
 	for (int y = 0; y < 8; ++y) {
-		if (board.at(x + Kmoves[y]) == '.' ||
-			in_array(board.at(x + Kmoves[y]), foe)) {
-			moves.push_back(
-				add_int_strings(x, x + Kmoves[y])
-			);
+		if (empty_or_foe(board.at(x + incr))) {
+			moves.push_back(add_int_strings(x, x + incr));
 		}
 	}
-	if (turn.compare("white") == 0) {
+	if (turn == "white") {
 		if (castle[0] &&
 			board.substr(96,2) == "..") {
 			moves.push_back("wk00");
@@ -21,7 +20,7 @@ Node::king(int x) {
 			moves.push_back("wq00");
 		}
 	}
-	else if (turn.compare("black") == 0) {
+	else {
 		if (castle[2] &&
 			board.substr(26,2) == "..") {
 			moves.push_back("bk00");

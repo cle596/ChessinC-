@@ -67,6 +67,7 @@ Node::Node(const Node & n)
 	board = n.board;
 	en_passant = n.en_passant;
 	castle_copy(n.castle,castle);
+	flips();
 }
 
 void
@@ -137,6 +138,7 @@ Node::update_board(std::string pos) {
 		);
 		board.replace(from, 1, ".");
 	}
+	flips();
 }
 
 void

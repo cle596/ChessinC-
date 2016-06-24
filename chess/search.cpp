@@ -11,17 +11,14 @@ int
 Search::ab(Node& n,int alpha,int beta,int d)
 {
 	int g, a, b;
-	
 	if (db.find(hash(n)) != db.end()) {
-		//std::cout << v.a << " " << v.b << std::endl;
-		if (db[hash(n)].d >= d) {
+		if (db[hash(n)].d <= d) {
 			if (db[hash(n)].a >= beta) return db[hash(n)].a;
 			if (db[hash(n)].b <= alpha) return db[hash(n)].b;
 			alpha = std::max(alpha, db[hash(n)].a);
 			beta = std::min(beta, db[hash(n)].b);
 		}
 	}
-	
 	if (d == 0) {
 		g = n.score();
 	}
@@ -33,7 +30,7 @@ Search::ab(Node& n,int alpha,int beta,int d)
 		std::vector<Node> children;
 		while (c < int(n.moves.size()) && g < beta) {
 			children.push_back(Node(n));
-			children.back().update_board(n.moves.at(c)); children.back().flips();
+			children.back().update_board(n.moves.at(c)); 
 			g = std::max(g, ab(children.back(), a, beta, d - 1));
 			a = std::max(a, g);
 			c += 1;
@@ -47,13 +44,13 @@ Search::ab(Node& n,int alpha,int beta,int d)
 		std::vector<Node> children;
 		while (c < int(n.moves.size()) && g > alpha) {
 			children.push_back(Node(n));
-			children.back().update_board(n.moves.at(c)); children.back().flips();
+			children.back().update_board(n.moves.at(c)); 
 			g = std::min(g, ab(children.back(), alpha, b, d - 1));
-			if (d == depth &&
-				g < b) {
-				std::cout << depth << std::endl; // this is never coming out as more than one
-				bmove = n.moves.at(c);
-				b = g;
+			if (d == depth) {
+				if (g < b) {
+					bmove = n.moves.at(c);
+					b = g;
+				}
 			}
 			else {
 				b = std::min(b, g);
@@ -68,7 +65,7 @@ Search::ab(Node& n,int alpha,int beta,int d)
 			db[hash(n)] = Value(-100000, n.b,d);
 		}
 		else {
-			if (db[hash(n)].d <= d) {
+			if (db[hash(n)].d >= d) {
 				db[hash(n)].b = n.b;
 				db[hash(n)].d = d;
 			}
@@ -81,7 +78,7 @@ Search::ab(Node& n,int alpha,int beta,int d)
 			db[hash(n)] = Value(n.a, n.b,d);
 		}
 		else {
-			if (db[hash(n)].d <= d) {
+			if (db[hash(n)].d >= d) {
 				db[hash(n)].a = n.a;
 				db[hash(n)].b = n.b;
 				db[hash(n)].d = d;
@@ -94,13 +91,12 @@ Search::ab(Node& n,int alpha,int beta,int d)
 			db[hash(n)] = Value(n.a, 100000, d);
 		}
 		else {
-			if (db[hash(n)].d <= d) {
+			if (db[hash(n)].d >= d) {
 				db[hash(n)].a = n.a;
 				db[hash(n)].d = d;
 			}
 		}
 	}
-	
 	return g;
 }
 
@@ -110,14 +106,9 @@ int Search::guess(Node& n,int g) {
 	int lower = -inf;
 	int b = 0;
 	while (lower < upper) {
+		g = (upper + lower + 1) / 2;
 		b = std::max(g, lower + 1);
 		g = ab(n, b - 1, b,depth);
-		std::cout << "guess: " << g << std::endl;
-		/*std::cout << "guess: " << g
-			<< " upper: " << upper
-			<< " lower: " << lower
-			<< " depth: " << depth
-			<< std::endl;*/
 		if (g < b) {
 			upper = g;
 		}
@@ -131,23 +122,15 @@ int Search::guess(Node& n,int g) {
 void 
 Search::tcurse(Node& n) {
 	int max = depth;
-	//std::cout << max << std::endl;
 	depth = 1;
 	int inf = 100000;
-	int wg = 0; int bg = 0;
+	int g = 0;
 	history.clear();
-	bool turn = false;
 	while (depth <= max) {
 		clock_t t = clock();
-		if (turn) {
-			wg = guess(n, wg);
-		}
-		else {
-			bg = guess(n, bg);
-		}
+		g = guess(n, g);
 		n.moves.clear();
 		depth += 1;
-		turn = !turn;
 	}
 	if (depth > max) {
 		depth -= 1;

@@ -16,10 +16,9 @@ Game::init() {
 
 bool
 Game::process_input() {
-	moves = root.gen_moves();
-	if (in_vector(pos, moves)) {
+	root.gen_moves();
+	if (in_vector(pos, root.moves)) {
 		root.update_board(pos);
-		root.flips();
 		root.moves.clear();
 		return true;
 	}
@@ -33,7 +32,7 @@ void
 Game::take_input(std::string move) {
 	std::cout << "make your move: ";
 	while (true) {
-		if (move.compare("") == 0) {
+		if (move == "") {
 			std::cin >> input;
 		}
 		else {
