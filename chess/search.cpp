@@ -10,19 +10,66 @@
 
 using namespace std;
 
-int
-Search::ab(Node& n,int alpha,int beta,int d)
-{
-	int g, a, b;
-	if (in_tt(db,hash(n))) {
+void
+Search::retrieve(Node& n,int& alpha,int& beta,int& d) {
+	if (in_tt(db, hash(n))) {
 		Value v = db[hash(n)];
 		if (v.d <= d) {
-			if (v.a >= beta) return v.a;
-			if (v.b <= alpha) return v.b;
+			//if (v.a >= beta) return v.a;
+			//if (v.b <= alpha) return v.b;
 			alpha = max(alpha, v.a);
 			beta = min(beta, v.b);
 		}
 	}
+}
+
+void
+Search::store(Node& n, int& alpha, int& beta, int& d,int& g) {
+	if (g <= alpha) {
+		n.b = g;
+		if (not_in_tt(db, hash(n))) {
+			db[hash(n)] = Value(-100000, n.b, d);
+		}
+		else {
+			if (db[hash(n)].d >= d) {
+				db[hash(n)].b = n.b;
+				db[hash(n)].d = d;
+			}
+		}
+	}
+	if (g > alpha && g < beta) {
+		n.a = g;
+		n.b = g;
+		if (not_in_tt(db, hash(n))) {
+			db[hash(n)] = Value(n.a, n.b, d);
+		}
+		else {
+			if (db[hash(n)].d >= d) {
+				db[hash(n)].a = n.a;
+				db[hash(n)].b = n.b;
+				db[hash(n)].d = d;
+			}
+		}
+	}
+	if (g >= beta) {
+		n.a = g;
+		if (not_in_tt(db, hash(n))) {
+			db[hash(n)] = Value(n.a, 100000, d);
+		}
+		else {
+			if (db[hash(n)].d >= d) {
+				db[hash(n)].a = n.a;
+				db[hash(n)].d = d;
+			}
+		}
+	}
+}
+
+int
+Search::ab(Node& n,int alpha,int beta,int d)
+{
+	int g, a, b;
+	retrieve(n,alpha,beta,d);
 	if (d == 0) {
 		g = n.score();
 	}
@@ -60,45 +107,7 @@ Search::ab(Node& n,int alpha,int beta,int d)
 			c += 1;
 		}
 	}
-	
-	if (g <= alpha) {
-		n.b = g;
-		if (not_in_tt(db,hash(n))) {
-			db[hash(n)] = Value(-100000, n.b,d);
-		}
-		else {
-			if (db[hash(n)].d >= d) {
-				db[hash(n)].b = n.b;
-				db[hash(n)].d = d;
-			}
-		}
-	}
-	if (g > alpha && g < beta) {
-		n.a = g;
-		n.b = g;
-		if (not_in_tt(db,hash(n))) {
-			db[hash(n)] = Value(n.a, n.b,d);
-		}
-		else {
-			if (db[hash(n)].d >= d) {
-				db[hash(n)].a = n.a;
-				db[hash(n)].b = n.b;
-				db[hash(n)].d = d;
-			}
-		}
-	}
-	if (g >= beta) {
-		n.a = g;
-		if (not_in_tt(db,hash(n))) {
-			db[hash(n)] = Value(n.a, 100000, d);
-		}
-		else {
-			if (db[hash(n)].d >= d) {
-				db[hash(n)].a = n.a;
-				db[hash(n)].d = d;
-			}
-		}
-	}
+	store(n, alpha, beta, d, g);
 	return g;
 }
 

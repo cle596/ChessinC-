@@ -33,4 +33,6 @@ public:
 	int hash(Node&);
 	int ab(Node&, int, int, int);
 	void make_child(vector<Node>&, Node&, string);
+	void retrieve(Node&n, int&, int&, int&);
+	void store(Node&, int&, int&, int&, int&);
 };
