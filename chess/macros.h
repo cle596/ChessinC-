@@ -7,3 +7,5 @@
 #define foe(a) in_array(a,foe)
 #define empty_or_foe(a) a == '.' || in_array(a,foe)
 #define dub(x) in_array(x, dub)
+
+#define inf 1000000

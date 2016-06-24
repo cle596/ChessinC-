@@ -99,9 +99,7 @@ Game::pos_to_move(std::string pos) {
 std::vector<std::string>
 Game::translate_moves(std::vector<std::string> moves) {
 	for (size_t x = 0; x < moves.size(); ++x) {
-		tmoves.push_back(
-			pos_to_move(moves.at(x))
-		);
+		tmoves.push_back(pos_to_move(moves.at(x)));
 	}
 	return tmoves;
 }

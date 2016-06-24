@@ -7,6 +7,7 @@
 #include "node.h"
 #include "game.h"
 #include "value.h"
+#include "macros.h"
 
 class Search {
 public:
@@ -15,7 +16,6 @@ public:
 	std::map<int,Value> db;
 	std::vector<std::string> history;
 	int depth;
-	static const int inf = 100000;
 	std::map<int, int>
 		P_keymap, p_keymap,
 		N_keymap, n_keymap,

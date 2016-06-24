@@ -6,6 +6,7 @@
 #include "search.h"
 #include "node.h"
 #include "value.h"
+#include "macros.h"
 
 int
 Search::ab(Node& n,int alpha,int beta,int d)
@@ -101,7 +102,6 @@ Search::ab(Node& n,int alpha,int beta,int d)
 }
 
 int Search::guess(Node& n,int g) {
-	int inf = 100000;
 	int upper = inf;
 	int lower = -inf;
 	int b = 0;
@@ -123,7 +123,6 @@ void
 Search::tcurse(Node& n) {
 	int max = depth;
 	depth = 1;
-	int inf = 100000;
 	int g = 0;
 	history.clear();
 	while (depth <= max) {
