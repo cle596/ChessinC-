@@ -30,4 +30,5 @@ public:
 	void gen_keymap();
 	int hash(Node&);
 	int ab(Node&, int, int, int);
+	void make_child(std::vector<Node>&, Node&, std::string);
 };

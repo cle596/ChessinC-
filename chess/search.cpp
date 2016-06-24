@@ -12,12 +12,13 @@ int
 Search::ab(Node& n,int alpha,int beta,int d)
 {
 	int g, a, b;
-	if (db.find(hash(n)) != db.end()) {
-		if (db[hash(n)].d <= d) {
-			if (db[hash(n)].a >= beta) return db[hash(n)].a;
-			if (db[hash(n)].b <= alpha) return db[hash(n)].b;
-			alpha = std::max(alpha, db[hash(n)].a);
-			beta = std::min(beta, db[hash(n)].b);
+	if (in_tt(db,hash(n))) {
+		Value v = db[hash(n)];
+		if (v.d <= d) {
+			if (v.a >= beta) return v.a;
+			if (v.b <= alpha) return v.b;
+			alpha = std::max(alpha, v.a);
+			beta = std::min(beta, v.b);
 		}
 	}
 	if (d == 0) {
@@ -30,8 +31,7 @@ Search::ab(Node& n,int alpha,int beta,int d)
 		int c = 0;
 		std::vector<Node> children;
 		while (c < int(n.moves.size()) && g < beta) {
-			children.push_back(Node(n));
-			children.back().update_board(n.moves.at(c)); 
+			make_child(children, n, n.moves.at(c));
 			g = std::max(g, ab(children.back(), a, beta, d - 1));
 			a = std::max(a, g);
 			c += 1;
@@ -44,8 +44,7 @@ Search::ab(Node& n,int alpha,int beta,int d)
 		int c = 0;
 		std::vector<Node> children;
 		while (c < int(n.moves.size()) && g > alpha) {
-			children.push_back(Node(n));
-			children.back().update_board(n.moves.at(c)); 
+			make_child(children,n,n.moves.at(c));
 			g = std::min(g, ab(children.back(), alpha, b, d - 1));
 			if (d == depth) {
 				if (g < b) {
@@ -62,7 +61,7 @@ Search::ab(Node& n,int alpha,int beta,int d)
 	
 	if (g <= alpha) {
 		n.b = g;
-		if (db.find(hash(n)) == db.end()) {
+		if (not_in_tt(db,hash(n))) {
 			db[hash(n)] = Value(-100000, n.b,d);
 		}
 		else {
@@ -75,7 +74,7 @@ Search::ab(Node& n,int alpha,int beta,int d)
 	if (g > alpha && g < beta) {
 		n.a = g;
 		n.b = g;
-		if (db.find(hash(n)) == db.end()) {
+		if (not_in_tt(db,hash(n))) {
 			db[hash(n)] = Value(n.a, n.b,d);
 		}
 		else {
@@ -88,7 +87,7 @@ Search::ab(Node& n,int alpha,int beta,int d)
 	}
 	if (g >= beta) {
 		n.a = g;
-		if (db.find(hash(n)) == db.end()) {
+		if (not_in_tt(db,hash(n))) {
 			db[hash(n)] = Value(n.a, 100000, d);
 		}
 		else {
@@ -101,7 +100,14 @@ Search::ab(Node& n,int alpha,int beta,int d)
 	return g;
 }
 
-int Search::guess(Node& n,int g) {
+void
+Search::make_child(std::vector<Node>& children,Node& parent,std::string move) {
+	children.push_back(Node(parent));
+	children.back().update_board(move);
+}
+
+int 
+Search::guess(Node& n,int g) {
 	int upper = inf;
 	int lower = -inf;
 	int b = 0;

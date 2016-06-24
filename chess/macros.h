@@ -9,3 +9,6 @@
 #define dub(x) in_array(x, dub)
 
 #define inf 1000000
+
+#define in_tt(x,h) x.find(h) != x.end()
+#define not_in_tt(x,h) x.find(h) == x.end()
