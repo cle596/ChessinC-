@@ -19,7 +19,20 @@ int main() {
 
 	Search s = Search();
 	s.depth = 3;
+	s.maps['P'] = s.P_keymap;
+	s.maps['N'] = s.N_keymap;
+	s.maps['B'] = s.B_keymap;
+	s.maps['R'] = s.R_keymap;
+	s.maps['Q'] = s.Q_keymap;
+	s.maps['K'] = s.K_keymap;
+	s.maps['p'] = s.p_keymap;
+	s.maps['n'] = s.n_keymap;
+	s.maps['b'] = s.b_keymap;
+	s.maps['r'] = s.r_keymap;
+	s.maps['q'] = s.q_keymap;
+	s.maps['k'] = s.k_keymap;
 	s.gen_keymap();
+	
 
 	while (true) {
 		g.root.print();

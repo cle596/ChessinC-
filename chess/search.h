@@ -25,6 +25,7 @@ public:
 		R_keymap, r_keymap,
 		Q_keymap, q_keymap,
 		K_keymap, k_keymap;
+	map<char, map<int,int>> maps;
 	
 	int guess(Node&,int);
 	void tcurse(Node&);

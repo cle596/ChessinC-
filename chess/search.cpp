@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <map>
 #include <bitset>
+#include <iterator>
 
 #include "search.h"
 #include "node.h"
@@ -169,61 +170,29 @@ Search::sort(vector<string>& moves,string move) {
 
 void 
 Search::gen_keymap() {
+	vector<char> keys;
+	for (map<char, map<int, int>>::iterator it = maps.begin(); it != maps.end(); ++it) {
+		keys.push_back(it->first);
+	}
 	for (int x = 0; x < 120; ++x) {
-		P_keymap[x] = rand() % 2147483647;
-		N_keymap[x] = rand() % 2147483647;
-		B_keymap[x] = rand() % 2147483647;
-		R_keymap[x] = rand() % 2147483647;
-		Q_keymap[x] = rand() % 2147483647;
-		K_keymap[x] = rand() % 2147483647;
-		p_keymap[x] = rand() % 2147483647;
-		n_keymap[x] = rand() % 2147483647;
-		b_keymap[x] = rand() % 2147483647;
-		r_keymap[x] = rand() % 2147483647;
-		q_keymap[x] = rand() % 2147483647;
-		k_keymap[x] = rand() % 2147483647;
+		for (size_t y = 0; y < keys.size(); ++y) {
+			maps[keys.at(y)][x] = rand() % 2147483647;
+		}
 	}
 }
 
 int
 Search::hash(Node& n) {
 	int hash = 0;
+	vector<char> keys;
+	for (map<char, map<int, int>>::iterator it = maps.begin(); it != maps.end(); ++it) {
+		keys.push_back(it->first);
+	}
 	for (size_t x = 0; x < n.board.length(); ++x) {
-		if (n.board.at(x) == 'P') {
-			hash ^= P_keymap[x];
-		}
-		else if (n.board.at(x) == 'p') {
-			hash ^= p_keymap[x];
-		}
-		else if (n.board.at(x) == 'N') {
-			hash ^= N_keymap[x];
-		}
-		else if (n.board.at(x) == 'n') {
-			hash ^= n_keymap[x];
-		}
-		else if (n.board.at(x) == 'B') {
-			hash ^= B_keymap[x];
-		}
-		else if (n.board.at(x) == 'b') {
-			hash ^= b_keymap[x];
-		}
-		else if (n.board.at(x) == 'R') {
-			hash ^= R_keymap[x];
-		}
-		else if (n.board.at(x) == 'r') {
-			hash ^= r_keymap[x];
-		}
-		else if (n.board.at(x) == 'Q') {
-			hash ^= Q_keymap[x];
-		}
-		else if (n.board.at(x) == 'q') {
-			hash ^= q_keymap[x];
-		}
-		else if (n.board.at(x) == 'K') {
-			hash ^= K_keymap[x];
-		}
-		else if (n.board.at(x) == 'k') {
-			hash ^= k_keymap[x];
+		for (size_t y = 0; y < keys.size(); ++y) {
+			if (n.board.at(x) == keys.at(y)) {
+				hash ^= maps[keys.at(y)][x];
+			}
 		}
 	}
 	return hash;
