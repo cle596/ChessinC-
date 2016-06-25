@@ -30,6 +30,7 @@ public:
 		Q_keymap, q_keymap,
 		K_keymap, k_keymap;
 	map<char, map<int,int>> maps;
+	vector<char> keys;
 	void gen_keymap();
 
 	int hash(Node&);

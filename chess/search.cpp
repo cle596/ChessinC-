@@ -25,6 +25,10 @@ Search::Search() {
 	maps['q'] = q_keymap;
 	maps['k'] = k_keymap;
 	gen_keymap();
+	map<char, map<int, int>>::iterator it = maps.begin();
+	for (it; it != maps.end(); ++it) {
+		keys.push_back(it->first);
+	}
 }
 
 int
@@ -47,7 +51,7 @@ Search::store(Node& n, int& alpha, int& beta, int& d,int& g) {
 	if (g <= alpha) {
 		n.b = g;
 		if (not_in_tt(db, hash(n))) {
-			db[hash(n)] = Value(-100000, n.b, d);
+			db[hash(n)] = Value(-inf, n.b, d);
 		}
 		else {
 			if (db[hash(n)].d <= d) {
@@ -73,7 +77,7 @@ Search::store(Node& n, int& alpha, int& beta, int& d,int& g) {
 	if (g >= beta) {
 		n.a = g;
 		if (not_in_tt(db, hash(n))) {
-			db[hash(n)] = Value(n.a, 100000, d);
+			db[hash(n)] = Value(n.a, inf, d);
 		}
 		else {
 			if (db[hash(n)].d <= d) {
@@ -89,12 +93,10 @@ Search::ab(Node& n,int alpha,int beta,int d)
 {
 	int g, a, b, c=0,ret;
 	std::vector<Node> children;
-	///*
 	ret=retrieve(n,alpha,beta,d,ret);
 	if (ret != inf * 2) {
 		return ret;
 	}
-	//*/
 	if (d == 0) {
 		g = n.score();
 	}
@@ -140,10 +142,6 @@ Search::make_child(vector<Node>& children,Node& parent,string move) {
 
 void 
 Search::gen_keymap() {
-	vector<char> keys;
-	for (map<char, map<int, int>>::iterator it = maps.begin(); it != maps.end(); ++it) {
-		keys.push_back(it->first);
-	}
 	for (int x = 0; x < 120; ++x) {
 		for (size_t y = 0; y < keys.size(); ++y) {
 			maps[keys.at(y)][x] = rand() % 2147483647;
@@ -154,10 +152,6 @@ Search::gen_keymap() {
 int
 Search::hash(Node& n) {
 	int hash = 0;
-	vector<char> keys;
-	for (map<char, map<int, int>>::iterator it = maps.begin(); it != maps.end(); ++it) {
-		keys.push_back(it->first);
-	}
 	for (size_t x = 0; x < n.board.length(); ++x) {
 		for (size_t y = 0; y < keys.size(); ++y) {
 			if (n.board.at(x) == keys.at(y)) {

@@ -18,7 +18,7 @@ int main() {
 	g.init();
 
 	Search s = Search();
-	s.depth = 4;
+	s.depth = 3;
 
 	while (true) {
 		g.root.print();
