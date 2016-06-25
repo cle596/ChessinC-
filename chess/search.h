@@ -34,8 +34,6 @@ public:
 	void gen_keymap();
 
 	int hash(Node&);
-	int retrieve(Node&n, int&, int&, int&,int&);
-	void store(Node&, int&, int&, int&, int&);
 
 	void make_child(vector<Node>&, Node&, string);
 	int ab(Node&, int, int, int);
