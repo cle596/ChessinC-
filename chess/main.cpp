@@ -15,7 +15,6 @@ using namespace std;
 int main() {
 
 	Game g = Game();
-	g.init();
 
 	Search s = Search();
 	s.depth = 3;
@@ -31,7 +30,7 @@ int main() {
 			int score = s.ab(g.root, -inf, inf, s.depth);
 			cout << "score: " << score << endl;
 			if (s.bmove != "") {
-				cout << Game::pos_to_move(s.bmove) << endl;
+				cout << g.pos_to_move(s.bmove) << endl;
 			}
 			g.root.moves.clear();
 			g.take_input("");

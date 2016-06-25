@@ -10,10 +10,21 @@
 
 using namespace std;
 
-void
-Game::init() {
+Game::Game() {
 	cout << "time\nto play\nchess!" << endl;
 	Node::set_npst();
+	for (int x = 0; x < 8; ++x) {
+		mp_cols[97 + x] = 1 + x;
+	}
+	for (int x = 0; x < 8; ++x) {
+		mp_rows[49 + x] = 90 - 10 * x;
+	}
+	for (int x = 0; x < 8; ++x) {
+		pm_cols[1 + x] = 97 + x;
+	}
+	for (int x = 0; x < 8; ++x) {
+		pm_rows[9 - x] = 49 + x;
+	}
 }
 
 bool
@@ -59,19 +70,11 @@ Game::take_input(string move) {
 string
 Game::move_to_pos(string move) {
 	string pos;
-	map<char, int> cols;
-	map<char, int> rows;
-	for (int x = 0; x < 8; ++x) {
-		cols[97 + x] = 1 + x;
-	}
-	for (int x = 0; x < 8; ++x) {
-		rows[49 + x] = 90 - 10 * x;
-	}
 	for (int x = 0; x < 3; x += 2) {
 		pos.append(
 			to_string(
-				cols[move.at(x)] + 
-				rows[move.at(x + 1)]
+				mp_cols[move.at(x)] + 
+				mp_rows[move.at(x + 1)]
 			)
 		);
 	}
@@ -81,20 +84,12 @@ Game::move_to_pos(string move) {
 string
 Game::pos_to_move(string pos) {
 	string move;
-	map<int, char> cols;
-	map<int, char> rows;
-	for (int x = 0; x < 8; ++x) {
-		cols[1 + x] = 97 + x;
-	}
-	for (int x = 0; x < 8; ++x) {
-		rows[9 - x] = 49 + x;
-	}
 	int p1 = stoi(pos.substr(0, 2), nullptr);
 	int p2 = stoi(pos.substr(2, 2), nullptr);
-	move += cols.at(p1 - (p1 / 10) * 10);
-	move += rows.at(p1 / 10);
-	move += cols.at(p2 - (p2 / 10) * 10);
-	move += rows.at(p2 / 10);
+	move += pm_cols.at(p1 - (p1 / 10) * 10);
+	move += pm_rows.at(p1 / 10);
+	move += pm_cols.at(p2 - (p2 / 10) * 10);
+	move += pm_rows.at(p2 / 10);
 	return move;
 }
 
