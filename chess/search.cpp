@@ -89,12 +89,12 @@ Search::ab(Node& n,int alpha,int beta,int d)
 {
 	int g, a, b, c=0,ret;
 	std::vector<Node> children;
-	/*
+	///*
 	ret=retrieve(n,alpha,beta,d,ret);
 	if (ret != inf * 2) {
 		return ret;
 	}
-	*/
+	//*/
 	if (d == 0) {
 		g = n.score();
 	}
@@ -115,7 +115,6 @@ Search::ab(Node& n,int alpha,int beta,int d)
 		n.gen_moves();
 		while (c < int(n.moves.size()) && g > alpha) {
 			make_child(children,n,n.moves.at(c));
-			cout << children.back().turn << endl; // color not flipped!
 			g = min(g, ab(children.back(), alpha, b, d - 1));
 			if (d == depth) {
 				if (g < b) {

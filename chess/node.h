@@ -10,6 +10,14 @@ class Node {
 public:
 
 	int a, b;
+	int nscore;
+
+	string turn;
+	bool castle[4]; //wk,wq,bk,bq
+	static const string castle_input[4];
+	int en_passant;
+
+	vector<string> moves;
 
 	string board =
 		"         \n"
@@ -24,13 +32,6 @@ public:
 		" RNBQKBNR\n"
 		"         \n"
 		"         \n";
-
-	int nscore;
-
-	string turn;
-	bool castle[4]; //wk,wq,bk,bq
-	static const string castle_input[4];
-	int en_passant;
 
 	static const int 
 		up = -10, 
@@ -66,8 +67,6 @@ public:
 		bdub[8] = {31,32,33,34,35,36,37,38},
 		wdub[8] = { 81,82,83,84,85,86,87,88 };
 
-	vector<string> moves;
-
 	//constructor and copy constructor 
 	Node();
 	Node(const Node& n);
@@ -86,6 +85,7 @@ public:
 
 	//rotates pst for blackside
 	static int* rotate_pst(const int*,int*);
+	static void set_npst();
 
 	//eval function
 	int score();
@@ -100,6 +100,5 @@ public:
 	void castle_reset();
 	static void castle_copy(const bool*,bool*);
 	
-	static void set_npst();
 };
 

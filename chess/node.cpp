@@ -69,7 +69,6 @@ Node::Node(const Node & n)
 	board = n.board;
 	en_passant = n.en_passant;
 	castle_copy(n.castle,castle);
-	flips();
 }
 
 void

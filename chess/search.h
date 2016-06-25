@@ -12,12 +12,16 @@
 using namespace std;
 
 class Search {
+
 public:
+
 	Search();
+
 	string bmove;
 	map<int,Value> db;
 	vector<string> history;
 	int depth;
+
 	map<int, int>
 		P_keymap, p_keymap,
 		N_keymap, n_keymap,
@@ -26,11 +30,13 @@ public:
 		Q_keymap, q_keymap,
 		K_keymap, k_keymap;
 	map<char, map<int,int>> maps;
-	
 	void gen_keymap();
+
 	int hash(Node&);
-	int ab(Node&, int, int, int);
-	void make_child(vector<Node>&, Node&, string);
 	int retrieve(Node&n, int&, int&, int&,int&);
 	void store(Node&, int&, int&, int&, int&);
+
+	void make_child(vector<Node>&, Node&, string);
+	int ab(Node&, int, int, int);
+
 };

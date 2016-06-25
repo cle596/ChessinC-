@@ -18,8 +18,7 @@ int main() {
 	g.init();
 
 	Search s = Search();
-	s.depth = 3;
-	string test = "white";
+	s.depth = 4;
 
 	while (true) {
 		g.root.print();
@@ -29,7 +28,7 @@ int main() {
 		}
 		else {
 			s.bmove = "";
-			int score = s.ab(g.root, -inf, inf, 3);
+			int score = s.ab(g.root, -inf, inf, s.depth);
 			cout << "score: " << score << endl;
 			if (s.bmove != "") {
 				cout << Game::pos_to_move(s.bmove) << endl;
